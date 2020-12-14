@@ -4,7 +4,7 @@
   $password = 'pwdpwd';
   $db = new PDO($dsn, $username, $password);
 
-  $query = "SELECT FirstName,LastName,PetName,Breed,PetBirthday
+  $query = "SELECT GroomingID,FirstName,LastName,PetName,Breed,PetBirthday
     FROM grooming";
   $stmt = $db->prepare($query);
   $stmt ->execute();
@@ -17,21 +17,39 @@
 <link rel="stylesheet" href="../../static/styles/normalize.css">
 <link rel="stylesheet" href="../../static/styles/styles.css">
 <title>Grooming Appointment List</title>
+
 </head>
 <body>
 <main>
   <h1>Grooming Pet Appointment List</h1>
-  <ol>
+  <table>
+  <tbody>
+  <thead>
+      <tr style='border:2px solid-black;'>
+        <th style='border:2px solid black;'>FirstName</th>
+        <th style='border:2px solid black;'>LastName</th>
+        <th style='border:2px solid black;'>PetName</th>
+        <th style='border:2px solid black;'>Breed Name</th>
+        <th style='border:2px solid black;'>Pet Birthday</th>
+      </tr>
+  </thead>
+  
   <?php
     while ($row = $stmt->fetch()) {
-      echo '<li>' . $row['FirstName'] . ' '
-            . $row['LastName'] .  ',  Pet Name -'
-            . $row['PetName'] .  ',  Breed - '
-            . $row['Breed'] .  ',  Pet Birthday -'
-            . $row['PetBirthday'] .  '</li>';
-    }
   ?>
-  </ol>
+  <tr>
+  <td style='border:2px solid black;'><?=$row['FirstName']?></td>
+  <td style='border:2px solid black;'><?=$row['LastName']?></td>
+  <td style='border:2px solid black;'><?=$row['PetName']?></td>
+  <td style='border:2px solid black;'><?=$row['Breed']?></td>
+  <td style='border:2px solid black;'><?=$row['PetBirthday']?></td>
+  
+    <?php
+    }
+    ?>
+    </tr>
+  <tbody>
+  </table>
 </main>
 </body>
 </html>
