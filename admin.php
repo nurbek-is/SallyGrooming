@@ -39,8 +39,6 @@
   <h1>No Results</h1>
   <p><?= $title?></p>
 <?php } ?>
-
-
 </main>
 </body>
 </html>
