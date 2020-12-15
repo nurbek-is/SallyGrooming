@@ -5,9 +5,21 @@
   $db = new PDO($dsn, $username, $password);
 
   $query = "SELECT GroomingID,FirstName,LastName,PetName,Breed,PetBirthday
-    FROM grooming";
+    FROM grooming
+    ORDER BY PetBirthday ASC
+    LIMIT 0, 3";
   $stmt = $db->prepare($query);
   $stmt ->execute();
+  
+    $qGroomingAppntCount = "SELECT COUNT(GroomingID) as num
+    FROM grooming";
+    $stmtAppntCount = $db->prepare($qGroomingAppntCount);
+    $stmtAppntCount->execute();
+    $row = $stmtAppntCount->fetch();
+    $appntCount = $row['num'];
+
+  $pageTitle = 'List of Appointments';
+  require 'includes/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,37 +29,49 @@
 <link rel="stylesheet" href="../../static/styles/normalize.css">
 <link rel="stylesheet" href="../../static/styles/styles.css">
 <title>Grooming Appointment List</title>
-
+<style>
+table,tr,th,td {
+  border:2px solid black;
+}
+</style>
 </head>
 <body>
+
+
 <main>
-  <h1>Grooming Pet Appointment List</h1>
+  <h1><?=$pageTitle?></h1>
   <table>
   <tbody>
+  <caption>Total Appointments: <?= $appntCount ?> </caption>
   <thead>
-      <tr style='border:2px solid-black;'>
-        <th style='border:2px solid black;'>FirstName</th>
-        <th style='border:2px solid black;'>LastName</th>
-        <th style='border:2px solid black;'>PetName</th>
-        <th style='border:2px solid black;'>Breed Name</th>
-        <th style='border:2px solid black;'>Pet Birthday</th>
+      <tr>
+        <th>GroomingID</th>
+        <th>LastName</th>
+        <th>PetName</th>
+        <th>Breed Name</th>
+        <th>Pet Birthday</th>
       </tr>
   </thead>
   
   <?php
     while ($row = $stmt->fetch()) {
+      $petsBirthdayInSec = strtotime($row['PetBirthday']);
+      $petsBirthday = date('m/d/Y',$petsBirthdayInSec);
   ?>
   <tr>
-  <td style='border:2px solid black;'><?=$row['FirstName']?></td>
-  <td style='border:2px solid black;'><?=$row['LastName']?></td>
-  <td style='border:2px solid black;'><?=$row['PetName']?></td>
-  <td style='border:2px solid black;'><?=$row['Breed']?></td>
-  <td style='border:2px solid black;'><?=$row['PetBirthday']?></td>
-  
+    <td>  
+      <a href="admin.php?GroomingID=<?=$row['GroomingID']?>">
+        <?=$row['GroomingID']?>
+      </a>
+    </td>
+  <td><?=$row['LastName']?></td>
+  <td><?=$row['PetName']?></td>
+  <td><?=$row['Breed']?></td>
+  <td><?= $petsBirthday ?></td>
+  </tr>
     <?php
     }
     ?>
-    </tr>
   <tbody>
   </table>
 </main>
