@@ -15,7 +15,8 @@
   if($row) {
     $breed = $row['Breed'];
     $firstName = $row['FirstName'];
-    $petBirthday = $row['PetBirthday'];
+    $petBirthdayInSec = strtotime($row['PetBirthday']);
+    $petBirthday = date('m/d/Y', $petBirthdayInSec);
   } else {
     $title = "There is no pet appointment for this groomingID";
   }
@@ -27,7 +28,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="../../static/styles/normalize.css">
 <link rel="stylesheet" href="../../static/styles/styles.css">
-<title><?= $row['breed'] ?></title>
+<title><?= $row['breed']?></title>
 </head>
 <body>
 <main>
@@ -39,8 +40,6 @@
   <h1>No Results</h1>
   <p><?= $title?></p>
 <?php } ?>
-
-
 </main>
 </body>
 </html>

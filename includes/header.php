@@ -24,9 +24,9 @@
     </div>
     <ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="poems.php">AboutUs</a></li>
-      <li><a href="poem-submit.php">Store Location</a></li>
-      <li><a href="my-account.php">Grooming</a></li>
+      <li><a href="aboutus.php">AboutUs</a></li>
+      <li><a href="admin.php">Store Location</a></li>
+      <li><a href="grooming.php">Grooming</a></li>
       <li><a href="contact.php">Contact us</a></li>
     </ul>
   </nav>
