@@ -11,7 +11,7 @@
   href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
   integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU">
 <link rel="stylesheet" href="../../../static/styles/normalize.css">
-<link rel="stylesheet" href="../../../static/styles/styles.css">
+<link rel="stylesheet" href="/styles/styles.css">
 <script src="../../../static/scripts/scripts.js"></script>
 <title><?= $pageTitle ?> | The Nurbs Pet Grooming Co.</title>
 </head>

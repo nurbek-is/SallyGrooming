@@ -1,5 +1,5 @@
 <footer>
-  <span>Copyright &copy; 2019 The Poet Tree Club.</span>
+  <span>Copyright &copy; 2019 Sally's Grooming Co.</span>
   <nav>
     <?php
       if ($currentUserId) {
