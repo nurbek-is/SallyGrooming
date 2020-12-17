@@ -12,6 +12,17 @@
   $rowsToShow = 5;
   $order = $_GET['order'] ?? 'PetBirthday';
   $dir = $_GET['dir'] ?? 'desc';
+  
+  //8 lines below(including if stmnt-!in_array) is just extra step,if someone messes with querystring 
+  // and types in some string in $order or $dir fields, it won't mess the page
+  $orderAllowed=['GroomingID','FirstName','LastName','PetName','Breed','PetBirthday'];
+  $dirAllowed=['asc','desc'];
+  if(!in_array($order, $orderAllowed)) {
+    $order = 'date_approved';
+  }
+  if(!in_array($dir,$dirAllowed)) {
+    $dir = 'asc';
+  }
 
   $query = "SELECT GroomingID,FirstName,LastName,PetName,Breed,PetBirthday
     FROM grooming
