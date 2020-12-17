@@ -1,4 +1,7 @@
 <?php
+  $pageTitle = 'Grooming Appointments';
+  require 'includes/header.php';
+
   $dsn = 'mysql:host=localhost;dbname=pet_shop';
   $username = 'root';
   $password = 'pwdpwd';
@@ -6,10 +9,13 @@
 
   $offset = $_GET['offset'] ?? 0; //if offset is null, default value will be 0;
   $offset = (int) $offset; //making the offset integer so we can use it later as ===
-  $rowsToShow = 2;
+  $rowsToShow = 5;
+  $order = $_GET['order'] ?? 'PetBirthday';
+  $dir = $_GET['dir'] ?? 'desc';
+
   $query = "SELECT GroomingID,FirstName,LastName,PetName,Breed,PetBirthday
     FROM grooming
-    ORDER BY PetBirthday ASC
+    ORDER BY $order $dir
     LIMIT $offset, $rowsToShow";
   $stmt = $db->prepare($query);
   $stmt ->execute();
@@ -21,14 +27,56 @@
     $row = $stmtAppntCount->fetch();
     $appntCount = $row['num'];
     
-    $href = "grm-appt-list.php";
-    $prevOffset = max(0, $offset - $rowsToShow); //max will return highest of 2 numbers
-    $prev = "$href?offset=$prevOffset";
+    $href = "grm-appt-list.php?";
+    $prevOffset = max(0, $offset - $rowsToShow); 
+    //max will return highest of 2 numbers
     $nextOffset = $offset + $rowsToShow;
-    $next = "$href?offset=$nextOffset";
+    $prev = $href . "offset=$prevOffset&order=$order&dir=$dir";
+    $next = $href . "offset=$nextOffset&order=$order&dir=$dir";
 
-  $pageTitle = 'List of Appointments';
-  require 'includes/header.php';
+   /* CONSTRUCT THE LINKS FOR THE HEADERS */
+  // Default all directions to ascending
+  $dirGroomingID = 'asc';
+  $dirFirstName ='asc';
+  $dirLastName = 'asc';
+  $dirPetName = 'asc';
+  $dirBreed = 'asc';
+  $dirPetBirthday = 'asc';
+  
+   // If the current direction is 'asc', switch the direction
+  //  for the header that is currently being sorted on
+  
+  if ($dir === 'asc') {
+    switch ($order) {
+      case 'GroomingID':
+        $dirGroomingID = 'desc';
+        break;
+      case 'FirstName':
+        $dirFirstName = 'desc';
+        break;
+      case 'LastName':
+        $dirLastName = 'desc';
+        break;
+      case 'PetName':
+        $dirPetName = 'desc';
+        break;
+      case 'Breed':
+        $dirBreed = 'desc';
+        break;
+      case 'PetBirthday':
+        $dirPetBirthday = 'desc';
+        break;
+    }
+  }
+
+$groomingLink = $href . "order=GroomingID&dir=$dirGroomingID";
+$FirstNameLink = $href . "order=FirstName&dir=$dirGroomingID";
+$LastNameLink = $href . "order=LastName&dir=$dirLastName";
+$PetNameLink = $href . "order=PetName&dir=$dirPetName";
+$BreedNameLink = $href . "order=Breed&dir=$dirBreed";
+$PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
+
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,11 +96,24 @@
   <caption>Total Appointments: <?= $appntCount ?> </caption>
   <thead>
     <tr>
-      <th>GroomingID</th>
-      <th>LastName</th>
-      <th>PetName</th>
-      <th>Breed Name</th>
-      <th>Pet Birthday</th>
+        <th>
+          <a href="<?= $groomingLink ?>">GroomingID</a>
+        </th>
+        <th>
+          <a href="<?= $FirstNameLink ?>">FirstName</a>
+        </th>
+        <th>
+          <a href="<?= $LastNameLink ?>">LastName</a>
+        </th>
+        <th>
+          <a href="<?= $PetNameLink ?>">PetName</a>
+        </th>
+        <th>
+          <a href="<?= $BreedNameLink ?>">Breed </a>
+        </th>
+        <th>
+        <a href="<?=$PetBirthdayLink ?>">PetBirthday</a>
+        </th>
     </tr>
   </thead>
   <?php
@@ -66,6 +127,7 @@
         <?=$row['GroomingID']?>
       </a>
     </td>
+    <td><?=$row['FirstName']?></td>
     <td><?=$row['LastName']?></td>
     <td><?=$row['PetName']?></td>
     <td><?=$row['Breed']?></td>
