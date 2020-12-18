@@ -170,19 +170,22 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
       </tfoot>
     <h2>Filtering</h2>
     <form method="get" action="grm-appt-list.php">
+    <input type="hidden" name="order" value="date_approved">
+     <input type="hidden" name="dir" value="desc">
       <label for="cat">Breed:</label>
       <select name="cat" id="cat">
-        <option value="0">GroomingID</option>
-        <option value='2'>LastName (5)</option>
-        <option value='1'>PetName (2)</option>
-        <option value='4'>BreedName (1)</option>
+        <option value="0">All</option>
+        <option value="1">Pitbull</option>
+        <option value='2'>German Shepherd (5)</option>
+        <option value='1'>Persian Cat (2)</option>
+        <option value='4'>Boxer (1)</option>
       </select>
-      <label for="user">PetName:</label>
+      <label for="user">LastName:</label>
       <select name="user" id="user">
-        <option value="0">Roxy</option>
-        <option value='3'>Angel (1)</option>
-        <option value='2'>Rocky (2)</option>
-        <option value='1'>Honey (5)</option>
+        <option value="0">All</option>
+        <option value='3'>Kalvin (1)</option>
+        <option value='2'>Gary (2)</option>
+        <option value='1'>Mike (5)</option>
       </select>
       <button name="filter" class="wide">Filter</button>
     </form>
