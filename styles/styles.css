@@ -14,3 +14,9 @@ body {
 .disabled {
     color:#666;;
   }
+.error {
+  color:#f00;
+}
+input {
+  display: block;
+}
