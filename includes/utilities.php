@@ -3,20 +3,35 @@
     // Provide way of knowing if the code is on production server
     return false ;
   }
+  function dbConnect() {
+    $dbConfig = getDbConfig();
+    $dsn2 = $dbConfig['dsn2'];
+    $username =  $dbConfig['']; //intentionally removed username
+    $password =  $dbConfig['']; //intentionally left blank
+
+    try {
+      $db = new PDO($dsn2, $username, $password);
+      return $db;
+    } catch (PDOException $e) {
+      // log error
+      logError($e, true);
+      return false;
+    }
+  }
 
   function isDebugMode() {
     // You may want to provide other ways for setting debug mode
     return !isProduction();
   }
-  function logError($e, $redirect=false) {
-    $errorTpe = gettype($e);
-    switch($errorType) {
-      case 'string': 
-         $msg = $e;
-          break;
-        default:
-          $msg = $e->getMessage() . ' in ' . $e ->getFile() . 
-          ' on line ' . $e-> getLine();  
+  function logError($e, $redirect=false) { 
+    $errorType = gettype($e);
+    switch ($errorType) {
+      case 'string':
+        $msg = $e;
+        break;
+      default:
+        $msg = $e->getMessage() . ' in ' . $e->getFile() . 
+          ' on line ' . $e->getLine();
     }
     error_log($msg); //php_error.log
   

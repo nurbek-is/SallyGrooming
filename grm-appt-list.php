@@ -2,10 +2,10 @@
   $pageTitle = 'Grooming Appointments';
   require 'includes/header.php';
 
-  $dsn = 'mysql:host=localhost;dbname=pet_shop';
-  $username = 'root';
-  $password = 'pwdpwd';
-  $db = new PDO($dsn, $username, $password);
+  // $dsn = 'mysql:host=localhost;dbname=pet_shop';
+  // $username = 'root';
+  // $password = 'pwdpwd';
+  // $db = new PDO($dsn, $username, $password);
 
   $offset = $_GET['offset'] ?? 0; //if offset is null, default value will be 0;
   $offset = (int) $offset; //making the offset integer so we can use it later as ===
@@ -28,13 +28,33 @@
     FROM grooming
     ORDER BY $order $dir
     LIMIT $offset, $rowsToShow";
-  $stmt = $db->prepare($query);
-  $stmt ->execute();
+  // $stmt = $db->prepare($query);
+  // $stmt ->execute();
+  try {
+    $stmt = $db->prepare($query);
+    if (!$stmt->execute($params)) {
+      $errorMsg = $stmt->errorInfo()[2] . ": $query";
+      logError($errorMsg);
+    }
+  } catch (PDOException $e) {
+    logError($e->getMessage(), true);
+  }
+ 
   
     $qGroomingAppntCount = "SELECT COUNT(GroomingID) as num
     FROM grooming";
-    $stmtAppntCount = $db->prepare($qGroomingAppntCount);
-    $stmtAppntCount->execute();
+    // $stmtAppntCount = $db->prepare($qGroomingAppntCount);
+    // $stmtAppntCount->execute();
+    try {
+      $stmtAppntCount = $db->prepare($qGroomingAppntCount);
+      if (!$stmtAppntCount->execute()) {
+        $errorMsg = $stmtAppntCount->errorInfo()[2] . ": $query";
+        logError($errorMsg);
+      }
+    } catch (PDOException $e) {
+      logError($e->getMessage(), true);
+    }
+
     $row = $stmtAppntCount->fetch();
     $appntCount = $row['num'];
     

@@ -1,3 +1,15 @@
+<?php
+require_once 'config.php';
+require_once 'utilities.php';
+
+if (isDebugMode()) {
+  ini_set('display_errors', '1');
+}
+
+if(!isset($db)) {
+  $db = dbConnect();
+}
+?>
 
 <!DOCTYPE HTML>
 <html lang="en">
