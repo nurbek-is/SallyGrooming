@@ -5,14 +5,84 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="styles/normalize.css">
 <link rel="stylesheet" href="styles/styles.css">
-<title>Grooming Appointment</title>
+<script src='grm-form.js' rel='script'></script>
+<title>Grooming Appointment Form</title>
 </head>
 <body>
 <main>
-  <h1>Make an appointment for your pet!</h1>
-  <form method="post" action="add-appointment.php" novalidate>
-   
+  <h1>Make a Grooming Appointment for your pet!</h1>
+  <form method="post" action="add-appointment.php"  id='ap-form' novalidate>
+    <fieldset>
+      <legend>Owner Info</legend>
+      <label for="firstname">First Name*:</label>
+      <input type='text' name="firstname" id="firstname" required minlength="1" maxlength="25">
+      <label for="lastname">Last Name*:</label>
+      <input type='text' name="lastname" id="lastname" required minlength="1" maxlength="25">
+      <label for="address">Address*:</label>
+      <input type='text' name="address" id="address" required minlength="1" maxlength="25">
+      
+      <label for="city">City*:</label>
+      <input type='text' name="city" id="city" required minlength="1" maxlength="25">
+
+      <label for="state">State*:</label>
+      <input type='text' name="state" id="state" required minlength="1" maxlength="15">
+
+      <label for="zipcode">Zip Code*:</label>
+      <input type='number' name="zipcode" id="zipcode" required minlength="1" maxlength="8">
+
+      <label for="cellphone">Phone Number*:</label>
+      <input type="tel" name="cellphone" id="cellphone" pattern="[1-9]\d{2}-\d{3}-\d{4}" required minlength="1" maxlength="14">
+
+      <label for="emailfield">Email:</label>
+      <input type="email" name="emailfield" id="emailfield">
+    </fieldset>
+    <fieldset>
+      <legend>Pet Info</legend>
+      <label for="pet">Type of Pet*:</label>
+    <select name="pet" id="typepet" required >
+      <option value="0" selected="selected">Choose from Below</option>
+      <option value="cat">Cat</option>
+      <option value="dog">Dog</option>
+      <option value="monkey">Monkey</option>
+    </select>  
+      <label for="petname">Pet's Name:</label>
+      <input type="text" name="petname" id="petname" required>   
+      <legend id='fixing'>Fixing Status:</legend>
+      <section id='checkboxsection'>
+      <label for="neutered">Neutered</label>
+      <input type="checkbox" name="fixing" id="neutered">
+      <label for="spayed">Spayed</label>
+      <input type="checkbox" name="fixing" id="spayed">
+      </section>
+    </fieldset>
+      <fieldset>
+        <legend>Pet Birth date:</legend>
+        <section id='petbirthday'>
+        <label for="birthday">Pet Birthday*:</label>
+        <input type="number" name="birthday" id='birthday'  required minlength="1" maxlength="2">
+        <label for="birthmonth">Birth Month*:</label>
+        <select name="birth-month" id='birthmonth'>
+          <option value="0">--Select Month--</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <label for="birthyear">Birth Year*:</label>
+        <input type="number"  name="birth-year" id='birthyear' required minlength="1" maxlength="4">
+      </section>
+      </fieldset>
+      <button name="add-employee">Make an Appointment</button>
   </form>
 </main>
 </body>
 </html>
+    

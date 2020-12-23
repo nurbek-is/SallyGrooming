@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/contact-form.css">
+    <title>Contact US</title>
+</head>
+<body>
+    <main>
+        <h1>Please fill out this form and we will be in contact with you shortly.</h1>
+        <form action="post" action='' id='contactform' novalidate>
+            <label for="first-name">First Name</label>
+            <input type="text" name='first-name' id='first-name'>
+            <label for="last-name">Last Name</label>
+            <input type="text" name='last-name' id='last-name'>
+            <label for="contactEmail">Email</label>
+            <input type="email" name='contactEmail' id='contactEmail'>
+            <input type="text" name='contactMessage' id='contactMessage'>
+            <label for="contactMessage">Message</label>
+            <textarea name="text" id='contactMessage' cols="30" rows="10" 
+              minlength="10" maxlength="200"></textarea>
+            <input type="submit">
+        </form>
+    </main>
+    
+</body>
+</html>
