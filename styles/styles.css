@@ -6,7 +6,6 @@ body {
   max-width:500px;
   margin:auto;
 }
-
  table,tr,th,td {
     border:2px solid black;
     padding:.9%;
@@ -17,6 +16,31 @@ body {
 .error {
   color:#f00;
 }
+
+/*****---Appointment Form Styling---*****/
 input {
   display: block;
+}
+input,select,label {
+  display:block;
+  margin:0.7% 0;
+}
+input[type=checkbox] + label  {
+  padding: 0 1%;
+}
+#checkboxsection {
+  display: flex;
+  flex-direction:row;
+  justify-content:space-evenly;
+  padding: 0.9%;
+}
+input,
+textarea {
+  border: 1px solid #333;
+  border-bottom: 4px solid #000;
+  box-sizing: border-box;
+  font-size:14pt;
+  margin: 0;
+  padding:4px;
+  width: 100%;
 }
