@@ -24,38 +24,24 @@ app.post('/process', [
    
 ], (request, response) => {
     const errors = validationResult(request);
-
+    console.log(errors.array());
+    let msg;
     if (errors.isEmpty()) {
-        // code to process form goes here
-        response.redirect('/success.html');
-    } else {
-        let msg = 'You have the following errors:<ol>';
+        msg = "<span class='valid'>Right On! " + "Good Job correctly filling it out</span>";
+    } 
+    else {
+         msg = 'You have the following errors:<ol>';
         for (error of errors.array()) {
             msg += "<li>" + error.msg + "</li>";
         }
         msg += "</ol>";
-        const html_process = `<!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="normalize.css">
-        <link rel="stylesheet" href="styles.css">
-        <title>Oops!</title>
-        </head>
-        <body>
-        <main>
-            <h1>Form Errors</h1>
-            ${msg}
-            <a href="javascript:history.back()">Try again.</a>
-        </main>
-        </body>
-        </html>`;
+            // <h1>Form Errors</h1>
+            // ${<a href="javascript:history.back()">Try again.</a>}
+       
         response.status(200);
-        response.send(html_process);
-    }
-    console.log(request.body);
-    console.log(errors.array());
+        response.send(msg);
+    
+}
 });
 
 app.listen(8080);

@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="styles/normalize.css">
-<link rel="stylesheet" href="styles/styles.css">
+<link rel="stylesheet" href="../styles/normalize.css">
+<link rel="stylesheet" href="../styles/styles.css">
 <script src='grm-form.js' rel='script'></script>
 <title>Grooming Appointment Form</title>
 </head>
 <body>
 <main>
   <h1>Make a Grooming Appointment for your pet!</h1>
-  <form method="post" action="add-appointment.php"  id='ap-form' novalidate>
+  
+  <form method="post" action="grooming.php"  id='ap-form' novalidate>
     <fieldset>
       <legend>Owner Info</legend>
       <label for="firstname">First Name*:</label>
@@ -63,18 +64,16 @@
         <label for="birthmonth">Birth Month*:</label>
         <select name="birth-month" id='birthmonth'>
           <option value="0">--Select Month--</option>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
+          <?php
+          for($i=1;$i<=12;$i++) {
+            echo "<option value='$i'";
+            if($i===$f['hire-month']) {
+              echo " selected";
+            }
+            echo ">"  .  $month[$i-1] . "</option>";
+          }
+          ?>
+        
         </select>
         <label for="birthyear">Birth Year*:</label>
         <input type="number"  name="birth-year" id='birthyear' required minlength="1" maxlength="4">

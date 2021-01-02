@@ -1,4 +1,5 @@
 <?php 
+require_once 'config.php';
   function isProduction() {
     // Provide way of knowing if the code is on production server
     return false ;
@@ -6,8 +7,8 @@
   function dbConnect() {
     $dbConfig = getDbConfig();
     $dsn2 = $dbConfig['dsn2'];
-    $username =  $dbConfig['']; //intentionally removed username
-    $password =  $dbConfig['']; //intentionally left blank
+    $username =  $dbConfig['un']; //intentionally removed username
+    $password =  $dbConfig['pw']; //intentionally left blank
 
     try {
       $db = new PDO($dsn2, $username, $password);

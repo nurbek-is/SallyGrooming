@@ -150,9 +150,6 @@ window.addEventListener('load', function(e) {
 //   }
 // }
 
-
-  
-
 //create a looop auto generate date of week dynamically 
 // let dayOfWeek = [Monday,Tuesday,Wednsday, Thursday, Friday,Saturday,Sunday]
 // for (let i=1; i<=12; $i++) {
