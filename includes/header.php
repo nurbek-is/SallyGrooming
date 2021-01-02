@@ -1,6 +1,7 @@
 <?php
-require_once 'config.php';
-require_once 'utilities.php';
+ require_once 'config.php';
+ require_once 'utilities.php';
+ require_once 'constants.php';
 
 if (isDebugMode()) {
   ini_set('display_errors', '1');
