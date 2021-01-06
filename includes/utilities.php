@@ -88,4 +88,9 @@ require_once 'config.php';
     }
   }
 
+  function logout() {
+    unset($_SESSION['user-id']);
+    unset($_COOKIE['token']); // unset on server
+    setcookie('token', '', 0); // unset on client
+  }
 ?>

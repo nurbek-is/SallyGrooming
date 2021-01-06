@@ -31,7 +31,7 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
           $currentUserId = $row['user_id'];
         }
       } catch (PDOException $e) {
-        logError($e);
+        logError($e->getMessage());
       }
     }
   }
@@ -66,9 +66,13 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
     </div>
     <ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="aboutus.php">AboutUs</a></li>
-      <li><a href="admin.php">Store Location</a></li>
-      <li><a href="grooming.php">Grooming</a></li>
+      <li><a href="about.php">AboutUs</a></li>
+      <?php if($currentUserId) {?>
+      <li><a href="my-account.php">My Account</a></li>
+      <?php } else { ?>
+      <li><a href="login.php">Login</a></li>
+      <?php } ?>
+
       <li><a href="contact.php">Contact us</a></li>
     </ul>
   </nav>

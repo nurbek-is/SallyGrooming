@@ -1,12 +1,14 @@
 <?php
   $pageTitle = 'Login';
   require 'includes/header.php';
-//   logout(); // In case a different user has logged in
+  logout(); // In case a different user has logged in
 
   // TODO: Set $username and $passPhrase
   //    These should be set to the values posted in the form
   //    If the form has not been posted, they should default to
   //      empty strings.
+  $username = trim($_POST['username'] ?? '');
+  $passPhrase = $_POST['pass-phrase'] ?? '';
 
   if ($username && $passPhrase) {
     
@@ -16,6 +18,8 @@
 
     try {
       // TODO: Prepare and execute the $qLogin query
+      $stmt = $db->prepare($qLogin);
+      $stmt->execute([$username]);
       
       if (!$row = $stmt->fetch()) {
         // username doesn't exist
@@ -30,6 +34,7 @@
         //
         //    Set 'user-id' session variable to user_id returned by
         //      query.
+        $_SESSION['user-id'] = $row['user_id'];
 
         //    If the user checked the remember-me checkbox, create a
         //      'token' cookie for 30 days (in minutes).
@@ -40,8 +45,37 @@
         //          for token, user_id, and token_expires set to the
         //          generated token, the current user id, and a date
         //          30 days (in minutes) in the future.
-        //        If the insert statement fails to execute, log the
-        //          error and redirect to the error page.
+           // log user in and redirect to home page
+       
+ 
+        if (!empty($_POST['remember-me'])) {
+          // Set cookie for 30 days
+          $interval = 30 * 24 * 60; // 30 days
+          $token = generateToken();
+          $qInsert = "INSERT INTO tokens
+          (token, user_id, token_expires)
+          VALUES ( '$token', ?, DATE_ADD(now(),
+                    INTERVAL $interval MINUTE) )";
+ 
+          try {
+            $stmtInsert = $db->prepare($qInsert);
+ 
+            if ($stmtInsert->execute( [$_SESSION['user-id']] )) {
+              $expiration = time() + 60 * $interval;
+              if (!setcookie('token', $token, $expiration)) {
+                // Could not set cookie on browser. Fail silently.
+                logError("Could not set cookie for $username.");
+              }
+            } else {
+              // Likely SQL error. Log and redirect to error page.
+              logError($stmtInsert->errorinfo()[2], true);
+            }
+          } catch (PDOException $e) {
+            // Could not insert cookie token. Fail silently.
+            logError($e->getMessage());
+          }
+        }
+        header("Location: index.php");
         //        If the insert fails due to a PDOException, log
         //          the error and fail silently.
         //        If the insert is successful, attempt to set a
