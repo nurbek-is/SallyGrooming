@@ -87,5 +87,4 @@ require_once 'config.php';
     header("Location: error-page.php");
     }
   }
-
 ?>

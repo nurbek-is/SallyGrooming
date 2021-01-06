@@ -15,7 +15,7 @@ if (!isset($db)) {
 
 $currentUserId = $_SESSION['user-id'] ?? 0;
   if (!$currentUserId) {
-    // Do we remember this user?
+    // if there is no 'user-id, check if is a Token cookies 
     if (isset($_COOKIE['token'])) {
       $qSelect = "SELECT user_id 
       FROM tokens 
@@ -30,10 +30,11 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
           $_SESSION['user-id'] = $row['user_id'];
           $currentUserId = $row['user_id'];
         }
-      } catch (PDOException $e) {
-        logError($e);
+      }  catch (PDOException $e) {
+        logError($e->getMessage());
       }
     }
+   header("Location:index.php");
   }
   $pageTitleTag = empty($pageTitle)
               ? 'Nurbekkos Awesome Grooming Co'
@@ -52,9 +53,9 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
 <link rel="stylesheet" crossorigin="anonymous"
   href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
   integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU">
-<link rel="stylesheet" href="../../../static/styles/normalize.css">
-<link rel="stylesheet" href="/styles/styles.css">
-<script src="../../../static/scripts/scripts.js"></script>
+<link rel="stylesheet" href="styles/normalize.css">
+<link rel="stylesheet" href="styles/styles.css">
+<!-- <script src="../../../static/scripts/scripts.js"></script> -->
 <title><?= $pageTitle ?> | The Nurbs Pet Grooming Co.</title>
 </head>
 <body>
@@ -69,6 +70,15 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
       <li><a href="aboutus.php">AboutUs</a></li>
       <li><a href="admin.php">Store Location</a></li>
       <li><a href="grooming.php">Grooming</a></li>
+      <?php 
+      if ($currentUserId) {
+      ?>
+      <li><a href="my-account.php">My-Account</a></li>
+      <?php
+      }  else { 
+       ?>
+        <li><a href="login.php">Log-In/Register </a></li>
+      <?php } ?>
       <li><a href="contact.php">Contact us</a></li>
     </ul>
   </nav>
