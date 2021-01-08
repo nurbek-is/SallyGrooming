@@ -1,6 +1,12 @@
 <?php
   ini_set('display_errors', '1');
   // Used to populate birth-month and hire-month fields
+require 'includes/header.php';
+
+if (!isAuthenticated()) {
+  header("Location: login.php?no-access=1");
+}
+  
   $months = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'
@@ -114,7 +120,6 @@
         echo "<li>$error</li>";
       }
       echo '</ol>';
-
     } elseif (isset( $_POST['make-appointment'])) {
       // We'd normally insert the data into a database here,
       // but we will just show the form data.

@@ -3,7 +3,7 @@
   require 'includes/header.php';
   logout(); // In case a different user has logged in
 
-  // TODO: Set $username and $passPhrase
+  //Set $username and $passPhrase
   //    These should be set to the values posted in the form
   //    If the form has not been posted, they should default to
   //      empty strings.
@@ -17,7 +17,7 @@
       WHERE username = ?";
 
     try {
-      // TODO: Prepare and execute the $qLogin query
+     // Prepare and execute the $qLogin query
       $stmt = $db->prepare($qLogin);
       $stmt->execute([$username]);
       
@@ -45,7 +45,7 @@
         //          for token, user_id, and token_expires set to the
         //          generated token, the current user id, and a date
         //          30 days (in minutes) in the future.
-           // log user in and redirect to home page
+        //        log user in and redirect to home page
        
  
         if (!empty($_POST['remember-me'])) {

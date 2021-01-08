@@ -72,7 +72,7 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
       <?php } else { ?>
       <li><a href="login.php">Login</a></li>
       <?php } ?>
-
+      <li><a href="grooming.php">Grooming</a></li>  
       <li><a href="contact.php">Contact us</a></li>
     </ul>
   </nav>
