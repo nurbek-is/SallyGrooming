@@ -12,7 +12,7 @@ if (!isAuthenticated()) {
     'August', 'September', 'October', 'November', 'December'
   ];
   $pets = ['dog', 'cat', 'monkey', 'lama', 'goat'];
-
+   $fixingStatus ='false';
 
   $f = [];
  
@@ -26,9 +26,9 @@ if (!isAuthenticated()) {
   $f['cell-phone'] = trim($_POST['cell-phone'] ?? '');
   $f['email'] = trim($_POST['email'] ?? '');
   $f['pet-name'] = trim($_POST['pet-name'] ?? '');
-  $f['neutered'] = $_POST['neutered'] ?? '';
-  $f['spayed'] = $_POST['spayed'] ?? '';
-  $f['type-dog']= $_POST['type-dog'] ?? '';
+  $f['neut'] = isset($_POST['neut']);
+  // $fixed = fixingStatus ? 1 : 0;
+  $f['type-breed']= isset($_POST['type-breed']);
   
   $f['type-pet'] = filter_input(INPUT_POST, 'type-pet',
   FILTER_VALIDATE_INT);
@@ -45,9 +45,13 @@ if (!isAuthenticated()) {
     if (!$f['type-pet']) {
       $errors[] = 'type of pet is required.';
     }
-    if ($f['type-pet']===1 && !$f['type-dog']) {
-      $errors[] = 'Type of dog is required';
+    // if ($f['type-pet']===1 && !$f['type-breed']) {
+    //   $errors[] = 'Type of breed is required';  
+    // }
+    if (!$f['type-breed']) {
+      $errors[] = 'Type of breed is required';  
     }
+
 
     if (!$f['first-name']) {
       $errors[] = 'First name is required.';
@@ -60,29 +64,42 @@ if (!isAuthenticated()) {
       $errors[] = 'Cell phone is required.';
     }
 
-     if (!$f['neutered'] && !$f['spayed']) {
-      $errors[] = 'A fixing status is required.';
-    } 
-    //fixing validation, it is not required for this project, but ready if it is required.
-    // if (!$f['neutered'] && !$f['spayed']) {
-    //   $errors[] = 'A fixing status is required.';
-    // } 
-    // if (!$f['email']) {
-    //   $errors[] = 'Email is required.';
-    // } elseif (!filter_var($f['email'], FILTER_VALIDATE_EMAIL)) {
-    //   $errors[] = 'Email is not valid.';
-    // }
- 
-    // if (!$f['birth-day'] || !$f['birth-month'] || !$f['birth-year']) {
-    //   $errors[] = 'A full Pet\'s birth date is required.';
-    // } elseif ( !checkdate($f['birth-month'],
-    //                       $f['birth-day'],
-    //                       $f['birth-year']) ) {
-    //   $errors[] = 'The birth date must be a valid date.';
-    // }
     
+
+     if ($f['email'] && !filter_var($f['email'], FILTER_VALIDATE_EMAIL))  {
+          $errors[] = 'Email is not valid.';
+    }
+  
     if (!$f['pet-name']) {
       $errors[] = 'Please provide the name of your pet';
+    }
+    if (!$errors) {
+      $grInsert = "INSERT INTO grooming
+      (FirstName,LastName,Address,City,State,Zip,PhoneNumber,Email,PetType,Breed,PetName,NeuteredOrSpayed,PetBirthday)
+      VALUES (:FirstName,:LastName,:Address,:City,:State,:Zip,:PhoneNumber,:Email,:PetType,:Breed,:PetName,:NeuteredOrSpayed,:PetBirthday);";
+      try {
+        $stmtInsert = $db->prepare($grInsert);
+        $stmtInsert->bindParam('FirstName', $f['first-name']);
+        $stmtInsert->bindParam('LastName', $f['ast-name']);
+        $stmtInsert->bindParam('Address', $f['address']);
+        $stmtInsert->bindParam('City', $f['city']);
+        $stmtInsert->bindParam('State', $f['state']);
+        $stmtInsert->bindParam('Zip', $f['zip']);
+        $stmtInsert->bindParam('PhoneNumber', $f['phone-number']);
+        $stmtInsert->bindParam('Email', $f['email']);
+        $stmtInsert->bindParam('PetType', $f['pet-type']);
+        $stmtInsert->bindParam('Breed', $f['breed']);
+        $stmtInsert->bindParam('PetName', $f['pet-name']);
+
+        // $stmtInsert->bindParam('fixingStatus', NeuteredOrSpayed);
+        $stmtInsert->bindParam('PetBirthday', $f['PetBirthday']);
+        // $stmtInsert->execute();
+        // $lastInsertId = $db->lastInsertId();
+        // header("Location:grm-appt-list.php?GroomingID=$lastInsertedId");
+      } catch(PODException $e) {
+        logError($e->getMessage());
+        $errorrs[]= 'Oops, our bad, Cannot make an appointment';
+      }
     }
   }
 ?>
@@ -96,15 +113,15 @@ if (!isAuthenticated()) {
 <script src='grm-form.js' rel='script'></script>
 <title>Grooming Appointment Form</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script> $(function(){
-  $("select:first()").on('change',function(){
-    if($("#type-pet option:selected").text()=='dog') {
-       $(".dog-div").css("display","block");
-    } else {
-      $(".dog-div").css("display","none");
-    }
-  })
-  });
+<script> 
+//  $(function(){
+//   $(".dog-div").hide();
+//   $("select:first()").on('change',function(){
+//     if($("#type-pet option:selected").text()=='dog') {
+//        $(".dog-div").show();
+//     } 
+//   })
+//   });
 
 </script>
 </head>
@@ -137,21 +154,22 @@ if (!isAuthenticated()) {
       $f['zip-code'] . '</li>';
       echo '<li><strong>Email:</strong> ' . 
       $f['email'] . '</li>';
-      echo '<li><strong>Pet-Name:</strong> ' . 
-      $f['pet-name'] . '</li>';
       echo '<li><strong>Pet-Type:</strong> ' . 
       $pets[$f['type-pet'] - 1] . '</li>';
       
-      if ($f['type-dog']) {
+      if ($f['type-breed']) {
         echo '<li><strong>Dog Type:</strong> ' . 
-        $f['type-dog'] . '</li>';
+        $f['type-breed'] . '</li>';
       }
-      if ($f['neutered']) {
-        echo '<li><strong>Fixing Status:</strong> ' . 
-        'Neutered'. '</li>';
-      } elseif(($f['spayed'])) {
-        echo '<li><strong>Fixing Status:</strong> ' . 
-        'Spayed'. '</li>';
+      echo '<li><strong>Pet-Name:</strong> ' . 
+      $f['pet-name'] . '</li>';
+      
+      if ($f['neut']) {
+        echo '<li><strong>Fixed:</strong> ' . 
+        'Yes'. '</li>';
+      }  else {
+        echo '<li><strong>Fixed:</strong> ' . 
+        'No'. '</li>';
       }
 
       $birthDate = mktime(0, 0, 0, $f['birth-month'],
@@ -200,25 +218,25 @@ if (!isAuthenticated()) {
           }     
     ?>
     </select> 
-
     <div class='dog-div'>
-    <label for="type-dog">Dog Breed*:</label>
-    <select name="type-dog" id="type-dog">
+    <label for="type-breed">Dog Breed*:</label>
+    <select name="type-breed" id="type-breed">
         <option value="0">--Select Breed--</option>
-        <option value="Dobermann">Dobermann</option>
+        <option value="Doberman">Dobermann</option>
         <option value="Pitbull">Pitbull</option>
         <option value="Boxer">Boxer</option>
         <option value="Rottweiler">Rottweiler</option>
     </select> 
     </div> 
+    
+
       <label for="pet-name">Pet's Name:</label>
       <input type="text" name="pet-name" id="pet-name" value="<?=$f['pet-name']?>"required>   
       <legend id='fixing'>Fixing Status:</legend>
       <section id='checkboxsection'>
-        <label for="neutered">Neutered</label>
-          <input type="checkbox" name="neutered" id="neutered">
-        <label for="spayed">Spayed</label>
-          <input type="checkbox" name="spayed" id="spayed">
+        <label for="yes">Neutered / Spayed?</label>
+          <input type="checkbox" name="neut" id="neut" value='yes'>
+        <label for="yes">Yes</label>
       </section>
     </fieldset>
       <fieldset>
@@ -245,7 +263,6 @@ if (!isAuthenticated()) {
       </fieldset>
       <button name="make-appointment">Make an Appointment</button>
   </form>
-
   <?php
     }
   ?>
