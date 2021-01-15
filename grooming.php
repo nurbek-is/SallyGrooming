@@ -7,6 +7,7 @@
   ];
   $pets = ['dog', 'cat', 'monkey', 'lama', 'goat'];
 
+  $dogBreed = ['dobermann','rotweiler','pug','husky','pitbull','boxer'];
 
   $f = [];
  
@@ -20,9 +21,8 @@
   $f['cell-phone'] = trim($_POST['cell-phone'] ?? '');
   $f['email'] = trim($_POST['email'] ?? '');
   $f['pet-name'] = trim($_POST['pet-name'] ?? '');
-  $f['neutered'] = $_POST['neutered'] ?? '';
-  $f['spayed'] = $_POST['spayed'] ?? '';
-  $f['type-dog']= $_POST['type-dog'] ?? '';
+  $f['type-dog']= filter_input(INPUT_POST, 'type-dog',
+  FILTER_VALIDATE_INT);
   
   $f['type-pet'] = filter_input(INPUT_POST, 'type-pet',
   FILTER_VALIDATE_INT);
@@ -53,19 +53,7 @@
     if (!$f['cell-phone']) {
       $errors[] = 'Cell phone is required.';
     }
-
-     if (!$f['neutered'] && !$f['spayed']) {
-      $errors[] = 'A fixing status is required.';
-    } 
-    //fixing validation, it is not required for this project, but ready if it is required.
-    // if (!$f['neutered'] && !$f['spayed']) {
-    //   $errors[] = 'A fixing status is required.';
-    // } 
-    // if (!$f['email']) {
-    //   $errors[] = 'Email is required.';
-    // } elseif (!filter_var($f['email'], FILTER_VALIDATE_EMAIL)) {
-    //   $errors[] = 'Email is not valid.';
-    // }
+    
  
     // if (!$f['birth-day'] || !$f['birth-month'] || !$f['birth-year']) {
     //   $errors[] = 'A full Pet\'s birth date is required.';
@@ -90,16 +78,16 @@
 <script src='grm-form.js' rel='script'></script>
 <title>Grooming Appointment Form</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script> $(function(){
+<script> 
+$(function(){
+    $(".dog-div").hide();
   $("select:first()").on('change',function(){
     if($("#type-pet option:selected").text()=='dog') {
-       $(".dog-div").css("display","block");
-    } else {
-      $(".dog-div").css("display","none");
-    }
+      $(".dog-div").show();
+    } 
   })
   });
-
+ 
 </script>
 </head>
 <body>
@@ -137,16 +125,13 @@
       echo '<li><strong>Pet-Type:</strong> ' . 
       $pets[$f['type-pet'] - 1] . '</li>';
       
-      if ($f['type-dog']) {
+      if ($pets[$f['type-pet'] - 1]=='dog' && $f['type-dog']) {
         echo '<li><strong>Dog Type:</strong> ' . 
-        $f['type-dog'] . '</li>';
+        $dogBreed[$f['type-dog']- 1] . '</li>';
       }
-      if ($f['neutered']) {
-        echo '<li><strong>Fixing Status:</strong> ' . 
-        'Neutered'. '</li>';
-      } elseif(($f['spayed'])) {
-        echo '<li><strong>Fixing Status:</strong> ' . 
-        'Spayed'. '</li>';
+    
+      if(isset($_POST['fixing'])) {
+        echo '<li><strong>Neutered or Spayed?:</strong> ' . $_POST['fixing'] . '</li>';
       }
 
       $birthDate = mktime(0, 0, 0, $f['birth-month'],
@@ -170,7 +155,7 @@
       <label for="city">City*:</label>
       <input type='text' name="city" id="city" value="<?=$f['city']?>"required minlength="1" maxlength="25">
       <label for="state">State*:</label>
-      <input type='text' name="state" id="state" value="<?=$f['state']?>" required minlength="1" maxlength="15">
+      <input type='text' name="state" id="state" value="<?=$f['state']?>"required minlength="1" maxlength="15">
       <label for="zip-code">Zip Code*:</label>
       <input type='number' name="zip-code" id="zip-code" value="<?=$f['zip-code']?>" required minlength="1" maxlength="8">
       <label for="cellphone">Phone Number*:</label>
@@ -200,20 +185,24 @@
     <label for="type-dog">Dog Breed*:</label>
     <select name="type-dog" id="type-dog">
         <option value="0">--Select Breed--</option>
-        <option value="Dobermann">Dobermann</option>
-        <option value="Pitbull">Pitbull</option>
-        <option value="Boxer">Boxer</option>
-        <option value="Rottweiler">Rottweiler</option>
+        <?php
+          for($i=1;$i<=6;$i++) {
+            echo "<option value='$i'";
+            if($i===$f['type-dog']) {
+              echo " selected";
+            }
+            echo ">"  . $dogBreed[$i-1] . "</option>";
+          }     
+          ?>
     </select> 
     </div> 
       <label for="pet-name">Pet's Name:</label>
       <input type="text" name="pet-name" id="pet-name" value="<?=$f['pet-name']?>"required>   
-      <legend id='fixing'>Fixing Status:</legend>
+      <legend id='fixing'>Neutered Or Spayed:</legend>
       <section id='checkboxsection'>
-        <label for="neutered">Neutered</label>
-          <input type="checkbox" name="neutered" id="neutered">
-        <label for="spayed">Spayed</label>
-          <input type="checkbox" name="spayed" id="spayed">
+        <!-- <label for="fixing">Neutered or Spayed?</label> -->
+          <input type="checkbox" name="fixing" value="Yes">Yes</input> 
+          <input type="checkbox" name="fixing" value="No">No</input> 
       </section>
     </fieldset>
       <fieldset>
@@ -240,7 +229,6 @@
       </fieldset>
       <button name="make-appointment">Make an Appointment</button>
   </form>
-
   <?php
     }
   ?>

@@ -44,10 +44,3 @@ textarea {
   padding:4px;
   width: 100%;
 }
-
-
- .dog-div {
-  display:none;
-  transition-delay: 10s;
-} 
-
