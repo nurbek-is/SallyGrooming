@@ -108,7 +108,11 @@
       echo '<article class="poem success">' .
           nl2br(POEM_REGISTRATION_SUCCESS) .
         '</article>';
-    } else {
+      } elseif (isset($_GET['no-access'])) {
+        echo '<article class="poem success">' .
+            nl2br(POEM_ACCESS_DENIED) .
+          '</article>';
+      } else {
       echo '<p>Need an account? 
         <a href="register.php">Register</a></p>';
     }
