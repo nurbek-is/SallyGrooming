@@ -4,5 +4,5 @@ require 'grooming.php';
 
 <?php 
 
-echo $lastInsertId;
+// echo $lastInsertId;
 ?>

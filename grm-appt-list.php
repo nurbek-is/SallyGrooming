@@ -115,7 +115,6 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="../../static/styles/normalize.css">
-<!-- <link rel="stylesheet" href="../../static/styles/styles.css"> -->
 <link rel="stylesheet" href="styles/styles.css">
 <title>Grooming Appointment List</title>
 </head>

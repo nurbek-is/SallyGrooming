@@ -16,7 +16,6 @@
   
   $f = [];
   
- 
   // Trim and Assign Form Entries
   $dateSubmitted = date('Y-m-d H:i:s');
   $f['first-name'] = trim($_POST['first-name'] ?? '');
@@ -155,7 +154,7 @@ $(function(){
           $stmtInsert->bindParam(':PetBirthday', $sBirthDate);
           $stmtInsert->execute();
           $lastInsertId = $db->insert_id;
-          header("Location: about.php?id=$lastInsertId");
+          header("Location: appnt-submit.php?id=$GroomingID");
         } catch (PDOException $e) {
           logError($e);
           $errors[] = 'Oops. Our bad. Cannot insert appintment.';
