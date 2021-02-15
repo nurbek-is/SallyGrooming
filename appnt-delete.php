@@ -1,18 +1,18 @@
 <?php
   $pageTitle = 'Delete Appointment';
   require 'includes/header.php';
- //$poemId  deleted
- 
-$confirmDelete = isset($_POST['grooming-id']);
-$errors = [];
- $qSelect = "SELECT GroomingID,DateSubmitted,FirstName,LastName,Address,City,State,Zip,Email,PetType,Breed,PetName
- FROM grooming
- WHERE GroomingID
- ORDER BY GroomingID DESC LIMIT 1";
- $stmt = $db->prepare($qSelect);
- $stmt->execute();
- $row = $stmt->fetch();
- $petType = $row['PetType'];
+
+  $confirmDelete = isset($_POST['grooming-id']);
+  $errors = [];
+  $qSelect = "SELECT GroomingID,DateSubmitted,FirstName,LastName,Address,City,State,Zip,Email,PetType,Breed,PetName
+  FROM grooming
+  WHERE GroomingID
+  ORDER BY GroomingID DESC LIMIT 1";
+  $stmt = $db->prepare($qSelect);
+  $stmt->execute();
+  $row = $stmt->fetch();
+  $petType = $row['PetType'];
+  $petName = $row['PetName'];
 
   if ($confirmDelete) {
     $qDelete = "DELETE FROM grooming 
@@ -28,9 +28,8 @@ $errors = [];
   }
 }
 ?>
-<main id="poem-delete" class="narrow">
+<main id="appnt-delete" class="narrow">
   <h1><?= $pageTitle ?></h1>
- 
   <?php
  
  if (!empty($deleteResult)) {
@@ -41,8 +40,6 @@ $errors = [];
   $deleteResultMsg = nl2br(APPOINTMENT_DELETE_FAIL);
   $cls = 'error';
 }
-
- 
     if (isset( $deleteResultMsg )) {
       // Output delete result
   ?>
@@ -54,7 +51,7 @@ $errors = [];
       // Output delete form
   ?>
     <form method="post" action="appnt-delete.php">
-      <p>Are you sure you want to delete  your appointment for your  <em><?= $petType ?></em>?</p>
+      <p>Are you sure you want to delete  your appointment for your  <em><?= $petType ?>&nbsp;<em><?= $petName ?></em>?</p>
       <button name="grooming-id" value="<?=$GroomingID?>" class="wide">
         Confirm Delete
       </button>

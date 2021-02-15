@@ -50,4 +50,14 @@ textarea {
   display:none;
   transition-delay: 10s;
 }  */
+.success {
+  color:green;
+  font-size: x-large;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
+.error {
+  color:'red';
+  font-size: x-large;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

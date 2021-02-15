@@ -68,7 +68,7 @@ $currentUserId = $_SESSION['user-id'] ?? 0;
       <li><a href="index.php">Home</a></li>
       <li><a href="about.php">AboutUs</a></li>
       <?php if($currentUserId) {?>
-      <li><a href="my-account.php">My Account</a></li>
+      <li><a href="user-profile.php">My Account</a></li> 
       <?php } else { ?>
       <li><a href="login.php">Login</a></li>
       <?php } ?>
