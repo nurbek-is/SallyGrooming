@@ -9,6 +9,8 @@ We have mail on the way!');
 define('APPOINTMENT_DELETE_SUCCESS', 'Your appointment is successfully cancelled, and we are sorry 
 you cancelled, we do hope you will come back again');
 
+define('ADMIN_APPOINTMENT_DELETE_SUCCESS', 'The customer\'s appointment request is successfully cancelled'); 
+
 define('POEM_DELETE_FAIL', 'We tried to delete it
 As you insisted
 But somehow or other

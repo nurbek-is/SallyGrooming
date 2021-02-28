@@ -6,12 +6,13 @@ body {
   max-width:500px;
   margin:auto;
 }
- table,tr,th,td {
+ tr,th,td {
     border:2px solid black;
     padding:.9%;
+    width: 12%;
   }
 .disabled {
-    color:#666;;
+    color:#666;
   }
 .error {
   color:#f00;
@@ -45,11 +46,7 @@ textarea {
   width: 100%;
 }
 
-/* 
- .dog-div {
-  display:none;
-  transition-delay: 10s;
-}  */
+
 .success {
   color:green;
   font-size: x-large;

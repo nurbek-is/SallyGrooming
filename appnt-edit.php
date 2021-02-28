@@ -1,22 +1,57 @@
 <?php
-  ini_set('display_errors', '1');
-  $pageTitle = 'Submit Appointment';
+  $pageTitle = 'Edit';
   require 'includes/header.php';
-  
+  if (!isset( $_REQUEST['GroomingID'] )) {
+    header("Location: index.php");
+  }
+  $groomId=$_REQUEST['GroomingID'];
+
+  if (!isAppntAuthor($groomId)) {
+    header("Location: index.php");
+  }
+  $errors = [];
+
   if (!isAuthenticated()) {
     header("Location: login.php?no-access=1");
   }
-
   $months = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'
   ];
   $pets = ['dog', 'cat', 'monkey', 'lama', 'goat'];
   $dogBreed = ['dobermann','rotweiler','pug','husky','pitbull','boxer'];
-  
+
+// selecting what is was already entered and autopopulatig some of the fields. 
+  $query = "SELECT GroomingID,DateSubmitted,FirstName,LastName,Address,City,State,Zip,Email,PhoneNumber,PetType,Breed,PetName
+  FROM grooming
+  WHERE GroomingID = ?";
+
+  $stmt = $db->prepare($query);
+  $stmt->execute([$groomId]);
+  $row = $stmt->fetch();
+  //storing retrived values to variables
+  if($row) {
+    $groomingID = $row['GroomingID'];
+    $dateSubmitted = date('m/d/Y', strtotime($row['DateSubmitted']));
+    $firstName= $row['FirstName']; 
+    $lastName = $row['LastName'];
+    $address = $row['Address'];
+    $city = $row['City'];
+    $state = $row['State'];
+    $zip = $row ['Zip'];
+    $cellphone = $row ['PhoneNumber'];
+    $email = $row ['Email'];
+    $petType = $row['PetType'];
+    $breed = $row['Breed'];
+    $petName = $row['PetName'];
+    $neuteredOrSpayed = $row['NeuteredOrSpayed'];
+    $petBirthdayInSec = strtotime($row['PetBirthday']);
+    $petBirthday = date('m/d/Y', $petBirthdayInSec);
+  } else {
+    $title = "There is no pet appointment for this groomingID";
+  }
   $f = [];
-  
-  // Trim and Assign Form Entries
+  // validating fields
   $dateSubmitted = date('Y-m-d H:i:s');
   $f['first-name'] = trim($_POST['first-name'] ?? '');
   $f['last-name'] = trim($_POST['last-name'] ?? '');
@@ -30,7 +65,6 @@
   $fixing = (int)$_POST['fixing'];
   $f['type-dog']= filter_input(INPUT_POST, 'type-dog',
   FILTER_VALIDATE_INT);
-  
   $f['type-pet'] = filter_input(INPUT_POST, 'type-pet',
   FILTER_VALIDATE_INT);
   $f['birth-month'] = filter_input(INPUT_POST, 'birth-month',
@@ -39,14 +73,13 @@
   FILTER_VALIDATE_INT);
   $f['birth-year'] = filter_input(INPUT_POST, 'birth-year',
   FILTER_VALIDATE_INT);
-
   $birthDate = mktime(0, 0, 0, $f['birth-month'],
   $f['birth-day'], $f['birth-year']);
-  $sBirthDate = date("Y-m-d", $birthDate); 
-
-  if (isset($_POST['make-appointment'])) {
-    $errors = [];
+  $sBirthDate = date("Y-m-d", $birthDate);
  
+// if Edit button is clicked, and if fields not filled, promp error msg.
+  if (!empty($_POST['GroomingID'])) {
+    $errors = [];
     if (!$f['type-pet']) {
       $errors[] = 'type of pet is required.';
     }
@@ -64,6 +97,51 @@
     }    
     if (!$f['pet-name']) {
       $errors[] = 'Please provide the name of your pet';
+    }
+    if (!$errors) {
+      $dateApproved = 'null'; // For now
+    
+      // Update appointment in mySQL
+      $qUpdate = "UPDATE grooming
+        SET FirstName = :FirstName,
+          LastName = :LastName,
+          Address = :Address,
+          City = :City,
+          State = :State,
+          PhoneNumber = :PhoneNumber,
+          Email = :Email,
+          PetType = :PetType,
+          Breed = :Breed,
+          PetName = :PetName,
+          NeuteredOrSpayed = :NeuteredOrSpayed,
+          PetBirthday = :PetBirthday
+        WHERE GroomingID = :GroomingID";
+
+      try {
+        $stmtUpdate = $db->prepare($qUpdate);
+        $stmtUpdate->bindParam(':FirstName', $f['first-name']);
+        $stmtUpdate->bindParam(':LastName', $f['last-name']);
+        $stmtUpdate->bindParam(':Address', $f['address']);
+        $stmtUpdate->bindParam(':City', $f['city']);
+        $stmtUpdate->bindParam(':State', $f['state']);
+        $stmtUpdate->bindParam(':PhoneNumber', $f['cell-phone']);
+        $stmtUpdate->bindParam(':Email', $f['email']);
+        $stmtUpdate->bindParam(':PetType', $pets[$f['type-pet'] - 1]);
+        $stmtUpdate->bindParam(':Breed', $dogBreed[$f['type-dog']- 1]);
+        $stmtUpdate->bindParam(':PetName', $f['pet-name']);
+        $stmtUpdate->bindParam(':NeuteredOrSpayed', $fixing);
+        $stmtUpdate->bindParam(':PetBirthday', $sBirthDate);
+        $stmtUpdate->bindParam(':GroomingID', $groomId);
+        $appntUpdated = $stmtUpdate->execute();
+      } catch (PDOException $e) {
+        $errors[] = 'Update failed. Please try again.';
+        logError($e);
+      }
+    }
+
+    if (!empty($appntUpdated)) {
+      echo '<p class="success">Your Appointment is updated.</p>';
+      echo '<p>We will review your updated Appointment and confirm with you soon.</p>';
     }
   }
 ?>
@@ -83,10 +161,9 @@ $(function(){
   $("select:first()").on('change',function(){
     if($("#type-pet option:selected").text()=='dog') {
       $(".dog-div").show();
-    } 
-  })
+      } 
+    })
   });
- 
 </script>
 </head>
 <body>
@@ -102,65 +179,35 @@ $(function(){
         echo "<li>$error</li>";
       }
       echo '</ol>';
-
-    } elseif (isset( $_POST['make-appointment'])) {
-       if (!$errors) {
-        
-        $slqInsert = "INSERT INTO grooming
-        (DateSubmitted,FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email, PetType, Breed, PetName, NeuteredOrSpayed,PetBirthday,user_id)
-        VALUES (:DateSubmitted,:FirstName, :LastName, :Address, :City, :State, :Zip, :PhoneNumber, :Email, :PetType, :Breed,:PetName,:NeuteredOrSpayed,:PetBirthday,:user_id);";
-        try {
-          $stmtInsert = $db->prepare($slqInsert);
-          $stmtInsert->bindParam(':DateSubmitted', $dateSubmitted);
-          $stmtInsert->bindParam(':FirstName', $f['first-name']);
-          $stmtInsert->bindParam(':LastName', $f['last-name']);
-          $stmtInsert->bindParam(':Address', $f['address']);
-          $stmtInsert->bindParam(':City', $f['city']);
-          $stmtInsert->bindParam(':State', $f['state']);
-          $stmtInsert->bindParam(':Zip', $f['zip-code']);
-          $stmtInsert->bindParam(':PhoneNumber', $f['cell-phone']);
-          $stmtInsert->bindParam(':Email', $f['email']);
-          $stmtInsert->bindParam(':PetType',$pets[$f['type-pet'] - 1]);
-          $stmtInsert->bindParam(':Breed', $dogBreed[$f['type-dog']- 1]);
-          $stmtInsert->bindParam(':PetName', $f['pet-name']);
-          $stmtInsert->bindParam(':NeuteredOrSpayed', $fixing);
-          $stmtInsert->bindParam(':PetBirthday', $sBirthDate);
-          $stmtInsert->bindParam(':user_id',$currentUserId);
-          $stmtInsert->execute();
-          $lastInsertId = $db->lastInsertId();
-          header("Location: appointment.php?GroomingID=$lastInsertId");
-        } catch (PDOException $e) {
-          logError($e);
-          $errors[] = 'Oops. Our bad. Cannot insert appintment.';
-        }
-      }
-    }
-    if (!empty($errors) || !isset( $_POST['make-appointment'])) {
-      // Show form
+    } 
   ?>
-  <form method="post" action="grooming.php"  id='ap-form' novalidate>
+<form method="post" action="appnt-edit.php"  id='ap-form' novalidate>
    
     <fieldset>
       <legend>Owner Info</legend>
       <label for="first-name">First Name*:</label>
-      <input type='text' name="first-name" id="first-name"  value="<?=$f['first-name']?>" required minlength="1" maxlength="25">
+      <input type='text' name="first-name" id="first-name"  value="<?=$firstName?>" required minlength="1" maxlength="25">
       <label for="last-name">Last Name*:</label>
-      <input type='text' name="last-name" id="last-name" value="<?=$f['last-name']?>" required minlength="1" maxlength="25">
+      <input type='text' name="last-name" id="last-name" value="<?=$lastName?>" required minlength="1" maxlength="25">
       <label for="address">Address*:</label>
-      <input type='text' name="address" id="address" value="<?=$f['address']?>"required minlength="1" maxlength="25">
+      <input type='text' name="address" id="address" value="<?=$address?>"required minlength="1" maxlength="25">
       <label for="city">City*:</label>
-      <input type='text' name="city" id="city" value="<?=$f['city']?>"required minlength="1" maxlength="25">
+      <input type='text' name="city" id="city" value="<?=$city?>"required minlength="1" maxlength="25">
       <label for="state">State*:</label>
-      <input type='text' name="state" id="state" value="<?=$f['state']?>"required minlength="1" maxlength="15">
+      <input type='text' name="state" id="state" value="<?=$state?>"required minlength="1" maxlength="15">
       <label for="zip-code">Zip Code*:</label>
-      <input type='number' name="zip-code" id="zip-code" value="<?=$f['zip-code']?>" required minlength="1" maxlength="8">
+      <input type='number' name="zip-code" id="zip-code" value="<?=$zip?>" required minlength="1" maxlength="8">
       <label for="cellphone">Phone Number*:</label>
-      <input type="tel" name="cell-phone" id="cell-phone" value="<?=$f['cell-phone']?>" pattern="[1-9]\d{2}-\d{3}-\d{4}" required minlength="1" maxlength="14">
+      <input type="tel" name="cell-phone" id="cell-phone" value="<?=$cellphone?>" pattern="[1-9]\d{2}-\d{3}-\d{4}" required minlength="1" maxlength="14">
       <label for="email">Email:</label>
-      <input type="email" name="email" id="email" value="<?=$f['email']?>">   
+      <input type="email" name="email" id="email" value="<?=$email?>">   
     </fieldset>
     <fieldset>
       <legend>Pet Info</legend>
+      <legend>Owner Info</legend>
+    </fieldset>
+    <fieldset>
+      <legend>Pet 
 
 <label for="type-pet">Type of Pet*:</label>
 
@@ -176,7 +223,6 @@ $(function(){
           }     
     ?>
     </select> 
-
     <div class='dog-div'>
     <label for="type-dog">Dog Breed*:</label>
     <select name="type-dog" id="type-dog">
@@ -196,7 +242,7 @@ $(function(){
       <input type="text" name="pet-name" id="pet-name" value="<?=$f['pet-name']?>"required>   
       <legend id='fixing'>Neutered Or Spayed:</legend>
       <section id='checkboxsection'>
-        <!-- <label for="fixing">Neutered or Spayed?</label> -->
+       <!-- if neutered radio button is not selected, it defaults to 0.  -->
           <input type="radio" name="fixing" <?php if (isset($_POST['fixing']) && $_POST['fixing']=="1") echo "checked";?> value="1">Yes
           <input type="radio" name="fixing" <?php if (isset($_POST['fixing']) && $_POST['fixing']=="0") echo "checked";?> value="0">No
     </section>
@@ -223,11 +269,8 @@ $(function(){
         <input type="number"  name="birth-year" id='birth-year' value="<?=$f['birth-year']?>">
       </section>
       </fieldset>
-      <button name="make-appointment">Make an Appointment</button>
+      <button name="GroomingID" value="<?=$groomId?>" class="wide"> Edit Appointment
+      </button>
   </form>
-  <?php
-    }
-  ?>
 </main>
 </body>
- 

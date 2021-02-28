@@ -1,13 +1,10 @@
 <?php
-  $pageTitle = 'Delete Appointment';
-  require 'includes/header.php';
-  
-  if (!isset($_REQUEST['GroomingID'] )) {
-    header("Location: index.php");
-  }
-  $groomId=$_REQUEST['GroomingID'];
+  $pageTitle = 'Delete Appointment Request';
+  require '../includes/header.php';
 
-  if (!isAppntAuthor($groomId)) {
+  $groomId = $_REQUEST['GroomingID'];
+
+  if (!isAdmin($currentUserId)) {
     header("Location: index.php");
   }
 
@@ -44,7 +41,7 @@
     }
   }
   if (!empty($deleteResult)) {
-    $deleteResultMsg = nl2br(APPOINTMENT_DELETE_SUCCESS);
+    $deleteResultMsg = nl2br(ADMIN_APPOINTMENT_DELETE_SUCCESS);
     $cls = 'success';
   } elseif (isset($deleteResult)) {
     logError("Failed to delete appointment");
@@ -65,8 +62,8 @@
     } else {
       // Output delete form
   ?>
-    <form method="post" action="appnt-delete.php">
-      <p>Are you sure you want to delete  your appointment for your
+    <form method="post" action="admin-apnt-delete.php">
+      <p>Are you sure you want to delete  this appointment for
         <em><?= $petType ?>&nbsp;<em><?= $petName ?></em>?</p> 
       <button name="GroomingID" value="<?=$groomId?>" class="wide">
         Confirm Delete
@@ -77,7 +74,7 @@
   ?>
 </main>
 <?php
-  require 'includes/footer.php';
+  require '../includes/footer.php';
 ?>
 </body>
 </html>

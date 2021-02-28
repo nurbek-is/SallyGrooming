@@ -5,7 +5,7 @@ session_start();
  require_once 'constants.php';
 
 if (isDebugMode()) {
-  ini_set('display_errors', '1');
+  ini_set('display_errors', '0');
 }
 
 // If $db isn't already set, set it.

@@ -1,11 +1,6 @@
 <?php
   $pageTitle = 'Grooming Appointments';
-  require 'includes/header.php';
-
-  // $dsn = 'mysql:host=localhost;dbname=pet_shop';
-  // $username = 'root';
-  // $password = 'pwdpwd';
-  // $db = new PDO($dsn, $username, $password);
+  require '../includes/header.php';
 
   $offset = $_GET['offset'] ?? 0; //if offset is null, default value will be 0;
   $offset = (int) $offset; //making the offset integer so we can use it later as ===
@@ -28,8 +23,6 @@
     FROM grooming
     ORDER BY $order $dir
     LIMIT $offset, $rowsToShow";
-  // $stmt = $db->prepare($query);
-  // $stmt ->execute();
   try {
     $stmt = $db->prepare($query);
     if (!$stmt->execute($params)) {
@@ -39,12 +32,8 @@
   } catch (PDOException $e) {
     logError($e->getMessage(), true);
   }
- 
-  
     $qGroomingAppntCount = "SELECT COUNT(GroomingID) as num
     FROM grooming";
-    // $stmtAppntCount = $db->prepare($qGroomingAppntCount);
-    // $stmtAppntCount->execute();
     try {
       $stmtAppntCount = $db->prepare($qGroomingAppntCount);
       if (!$stmtAppntCount->execute()) {
@@ -57,8 +46,7 @@
 
     $row = $stmtAppntCount->fetch();
     $appntCount = $row['num'];
-    
-    $href = "grm-appt-list.php?";
+    $href = "admin.php?";
     $prevOffset = max(0, $offset - $rowsToShow); 
     //max will return highest of 2 numbers
     $nextOffset = $offset + $rowsToShow;
@@ -115,7 +103,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="../../static/styles/normalize.css">
-<link rel="stylesheet" href="styles/styles.css">
+<link rel="stylesheet" href="../styles/styles.css">
 <title>Grooming Appointment List</title>
 </head>
 <body>
@@ -153,7 +141,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
   ?>
   <tr>
     <td>  
-      <a href="admin.php?GroomingID=<?=$row['GroomingID']?>">
+      <a href="admin-apnt-view.php?GroomingID=<?=$row['GroomingID']?>">
         <?=$row['GroomingID']?>
       </a>
     </td>
@@ -188,7 +176,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
         </tr>
       </tfoot>
     <h2>Filtering</h2>
-    <form method="get" action="grm-appt-list.php">
+    <form method="get" action="admin.php">
     <input type="hidden" name="order" value="date_approved">
      <input type="hidden" name="dir" value="desc">
       <label for="cat">Breed:</label>
@@ -213,5 +201,5 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
 </body>
 </html>
 <?php
-  require 'includes/footer.php';
+  require '../includes/footer.php';
 ?>

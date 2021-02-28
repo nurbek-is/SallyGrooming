@@ -19,6 +19,48 @@ require_once 'config.php';
   function isAuthenticated() {
     return isset($_SESSION['user-id']);
   }
+  function isAppntAuthor($groomId, $userId = null) {
+    /*
+      Check if user is author of poem
+      $userID defaults to logged-in user id
+    */
+    $db = dbConnect();
+    if (!$userId && !isAuthenticated()) {
+      return false;
+    }
+    $userId = $userId ?? $_SESSION['user-id'];
+    $q = 'SELECT user_id FROM grooming  WHERE GroomingID = ?';
+    try {
+      $stmt = $db->prepare($q);
+      $stmt->execute([$groomId]);
+      $row = $stmt->fetch();
+    } catch (PDOException $e) {
+      logError($e);
+      return false;
+    }
+
+    return($row['user_id'] === $userId);
+  }
+  function isAdmin($userId) {
+    /*
+      Check if user is admin.
+    */
+    $db = dbConnect();
+    $q = 'SELECT is_admin FROM users WHERE user_id = ?';
+
+    try {
+      $stmt = $db->prepare($q);
+      $stmt->execute( [$userId] ); 
+      if (!$row = $stmt->fetch()) {
+        return false;
+      }
+    } catch (PDOException $e) {
+      logError( $e->getMessage() );
+      return false;
+    }
+
+    return $row['is_admin']; // Returns 0 or 1
+  }
 
   function isDebugMode() {
     // You may want to provide other ways for setting debug mode
