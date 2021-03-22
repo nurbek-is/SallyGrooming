@@ -30,23 +30,8 @@
         $loginFailed = true;
         $failureMessage = nl2br(POEM_REGISTRATION_UNCONFIRMED);
       } elseif (password_verify($passPhrase, $row['pass_phrase'])) {
-        // TODO: log user in and redirect to home page
-        //
-        //    Set 'user-id' session variable to user_id returned by
-        //      query.
+     
         $_SESSION['user-id'] = $row['user_id'];
-
-        //    If the user checked the remember-me checkbox, create a
-        //      'token' cookie for 30 days (in minutes).
-        //      To do so, follow these steps:
-        //        Use the generateToken() utility function to
-        //          generate the token.
-        //        Insert a new row into the tokens table with values
-        //          for token, user_id, and token_expires set to the
-        //          generated token, the current user id, and a date
-        //          30 days (in minutes) in the future.
-        //        log user in and redirect to home page
-       
  
         if (!empty($_POST['remember-me'])) {
           // Set cookie for 30 days
@@ -97,7 +82,9 @@
     }
   }
 ?>
-<main class="narrow">
+
+<main class="small">
+  <!-- <section id='form'> -->
   <h1><?= $pageTitle ?></h1>
   <?php
     if (isset($loginFailed)) {
@@ -132,6 +119,7 @@
   <p class="clear">
     <a href="pass-phrase-reset.php">Forgot your pass phrase?</a>
   </p>
+ 
 </main>
 <?php
   require 'includes/footer.php';

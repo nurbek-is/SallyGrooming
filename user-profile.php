@@ -161,7 +161,8 @@
     logError($e);
   }
 ?>
-<main class="narrow">
+
+<main class="small">
   <h1><?= $pageTitle ?></h1>
   <?php
     if (!empty($errors)) {

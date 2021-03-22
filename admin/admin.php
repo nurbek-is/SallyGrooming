@@ -175,7 +175,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
           ?>
         </tr>
       </tfoot>
-    <h2>Filtering</h2>
+    <!-- <h2>Filtering</h2>
     <form method="get" action="admin.php">
     <input type="hidden" name="order" value="date_approved">
      <input type="hidden" name="dir" value="desc">
@@ -195,7 +195,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
         <option value='1'>Mike (5)</option>
       </select>
       <button name="filter" class="wide">Filter</button>
-    </form>
+    </form> -->
   </table>
 </main>
 </body>

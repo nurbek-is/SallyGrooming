@@ -1,60 +1,353 @@
-html {
-   height:100%;
-   width:100%;
- }
 body {
-  max-width:500px;
-  margin:auto;
+  background-image:url('../images/Fetch_Park.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font: 1rem/1.3 Verdana, Geneva, Tahoma, sans-serif;
 }
- tr,th,td {
-    border:2px solid black;
-    padding:.9%;
-    width: 12%;
+nav {
+    background: orange;
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 10%;
+}
+nav li {
+    float: left;
   }
-.disabled {
-    color:#666;
+nav::after {
+    content: "";
+    display: block;
+    clear: both;
   }
-.error {
-  color:#f00;
+nav a {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+  }
+  nav li:hover {
+    background: rgb(182, 118, 118);
+  }
+  nav a:active {
+    color: #cce;
+  }
+  li.contains {
+    position:relative;
+    z-index: 1;
+  }
+  li.contains:after {
+    content: '\02c5';
+    position:absolute;
+    right:3px;
+    top:40%;
+  }
+  li.contains ul {
+    display: none;
+  }
+  li.contains:hover ul {
+    background: white;
+    display: block;
+    position: absolute;
+    border:1px solid black;
+  }
+  li.contains li {
+    float: none;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0px;
+  }
+ main {
+   border:1.5px solid white;
+   width:70%;
+   height:80%;
+   margin:5% 10%;
+   color:white;
+  }
+  
+  #indexmain {
+    border:1.5px solid white;
+    width:70%;
+    height:80%;
+    margin:2% 10%;
+    color:white;
+    padding:17% 0% 10% 10%;
+    position:relative;
+}
+section#indexpg {
+  background-color:brown;
+    border: 1px solid black;
+    left:0;
+    top:0;
+    bottom:5;
+    position:absolute; 
+    overflow: hidden;
+    border-top: 0.2rem solid black;
+    padding: 1%;
+    width: 98%;
+  }
+  section img {
+    float:right;
+    margin: 0.5rem 0 0.5rem 0.2rem;
+  }
+  section p {
+    line-height: 2;
+    text-align: left;
+  }
+  
+  /* Forms */
+main.small {
+    margin: 1rem auto 10rem;
+    max-width: 500px;
+    padding:1rem;
+  }
+main.contactus {
+    margin: auto;
+    max-width: 600px;
+}
+  label {
+    display: block;
+    font-family: Arial;
+    font-size: 1.5em;
+    margin: .3em 0;
+  }
+  
+  fieldset label,
+  label.inline {
+    display: inline;
+    font-size: .9em;
+  }
+  
+  input,
+  textarea {
+    border: 1px solid #333;
+    border-bottom: 4px solid #000;
+    box-sizing: border-box;
+    font-size: 1.3em;
+    margin: 0;
+    padding: .1em;
+    width: 100%;
+  }
+
+  /* ------Footer ---------*/
+  footer {
+    clear:both;
+    left:0;
+    bottom:0;
+    position: fixed;
+    width:100%;
+    padding:4% 0 0 0;
+  }
+  #footer {
+    display: flex;
+    flex-direction: row;
+    background: lightblue;
+    justify-content: flex-start;
+  }
+  footer nav.fcontains  {
+    display: none;
+  }
+  footer span,footer a {
+  margin:0 2.5%;
+  }
+  #footer, footer>span,footer>a {
+   padding:0.6% 0;
+   font-size: large;
+  }
+  footer nav li {
+    list-style: none;
+  }
+  #mobile-menu-icon {
+    display: none;
+  }
+/* -----------------------DropUp in footer section ---------------------*/
+  .dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  .dropbtn:after {
+    content:' \005E';
+  }
+  
+  .dropup {
+    position: relative;
+    display: inline-block; 
+  }
+  .dropup-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    bottom: 50px;
+    z-index: 5;
+  }
+  .dropup-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropup-content a:hover {
+    background-color: #ccc;
+  }
+  
+  .dropup:hover .dropup-content{
+    display: block;
+  }
+  .dropup:hover .dropbtn {
+    background-color: #2980B9;
+  }
+  @media (min-width:992px) {
+    .subservices {
+    
+    }
+
+  }
+   /* ---------------Media Query for Tablets  -----------------*/
+@media (max-width:768px) {
+  .book-btn{
+    width:72px!important;
+   }
 }
 
-/*****---Appointment Form Styling---*****/
-input {
-  display: block;
+  /* ---------------Media Query for index page -----------------*/
+  @media (max-width: 480px) {
+    #mobile-menu-icon {
+      cursor: pointer;
+      display: block;
+      left: 0.1rem;
+      position: absolute;
+      top: 0.1rem;
+    }
+     nav {
+      font-size: 1.2rem;
+    }
+    nav ul {
+      background-color:hotpink;
+      display: none;
+      position: absolute;
+      top: 1.3rem;
+      right:1px;
+      width: 100%;
+      z-index: 1;
+    }
+    nav li {
+      float: none;
+    }
+    
+    nav a {
+      text-align: center;
+    }
+    .contains li a {
+      right:3px;
+      font-size: 0.9rem;
+      padding-left: 3px;
+    }
+
+    li.contains li {
+      float:right;
+    }
+    /* .book-btn{
+     width:72px!important;
+    } */
+    
+  }
+  
+   /* ------------------------Reviews page -------------------------*/
+   h3 {
+    width: 80%; 
+    text-align: center; 
+    border-bottom: 1px solid hsl(193, 100%, 50%);
+    line-height: 0.1em;
+    margin: 10px 10px 20px 10px; 
+    color: hotpink;
+ } 
+ 
+ /*---------------------------Services page----------------------- */
+.services img {
+  float: left;
+  margin:0.5% 1.5%;
+  border-radius: 20%;
 }
-input,select,label {
+
+h3 span { 
+    background: gray;
+    padding:0 10px; 
+    color:Yellow;
+    margin-left: 160px;
+}
+
+ .subservices {
+  height: 100%;
   display:block;
-  margin:0.7% 0;
+  clear:both;
+  content:'';
 }
-input[type=checkbox] + label  {
-  padding: 0 1%;
-}
-#checkboxsection {
-  display: flex;
-  flex-direction:row;
-  justify-content:space-evenly;
-  padding: 0.9%;
-}
-input,
-textarea {
-  border: 1px solid #333;
-  border-bottom: 4px solid #000;
-  box-sizing: border-box;
-  font-size:14pt;
-  margin: 0;
-  padding:4px;
-  width: 100%;
+.subservices:visited {
+  border:2.5px solid hotpink;
 }
 
 
-.success {
-  color:green;
-  font-size: x-large;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+#mainservices {
+  border:1.5px solid white;
+  width:70%;
+  margin:2% 10%;
+  color:white;
+  padding:20% 0% 20% 10%;
+  position:relative;
+  background-color: rebeccapurple;
+ }
+
+ .services { 
+  border: 1px solid black;
+  left:0;
+  top:0;
+  bottom:5;
+  position:absolute;
+  background-color:rgb(67, 86, 85);    
+}
+.services h4 {
+  color:rgb(231, 224, 236);
+  clear:right;
+}
+.service-para-wrapper {
+ clear:right;
+}
+#category-tabs li a{
+  text-decoration: none;
+  color:rgb(200, 255, 0);
+}
+ .rates-ul {
+  display:none;
+  margin-left: 3%;
+}
+#category-tabs {
+  margin-left: 25%;
+}
+.book-btn {
+  background-color: royalblue;
+  box-shadow: 2px 2px lawngreen;
+  width:7%;
+  height:1.5%;
+}
+.book-btn a {
+  text-decoration: none;
+  color:black;
+}
+.book-btn a:hover {
+  color:white;
+}
+.book-btn:hover{
+background: lightsalmon;
+transition: background 1s, height 0.5s, width 0.5s;
+width:8%;
+height:3%;
+}
+i {
+  margin-right:4px;
 }
 
-.error {
-  color:'red';
-  font-size: x-large;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}

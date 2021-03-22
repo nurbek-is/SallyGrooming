@@ -128,3 +128,6 @@
 </main>
 </body>
 </html>
+<?php
+  require 'includes/footer.php';
+?>

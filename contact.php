@@ -1,7 +1,7 @@
 <?php
+require 'includes/header.php';
 ini_set('display_errors', '1');
 $pageTitle = 'Contact Us';
-require 'includes/header.php';
 
 $f = [];
 
@@ -10,11 +10,11 @@ $f['first-name'] = trim($_POST['first-name'] ?? '');
 $f['last-name'] = trim($_POST['last-name'] ?? '');
 $f['email'] = trim($_POST['email'] ?? '');
 $f['message'] = trim($_POST['message'] ?? '');
-$f['placeholder'] = 'Be it poetry. Be it prose.
-This is where your message goes.';
+$f['placeholder'] = 'Here you goes your message.';
 
-echo '<main id="contact-form">';
-echo "<h1>$pageTitle</h1>";
+//  echo '<section id="form">';
+ echo '<main class="contactus">';
+// echo "<h1>$pageTitle</h1>";
 
 if (isset($_POST['send'])) {
   require_once 'mail-config.php';
@@ -90,6 +90,8 @@ Thank you very, very much!
   }
 }
 ?>
+
+<h1><?= $pageTitle ?></h1>
   <form method="post" action="contact.php" novalidate>
     <label for="first-name">First Name*:</label>
     <input name="first-name" id="first-name"
