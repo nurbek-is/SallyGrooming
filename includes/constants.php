@@ -1,10 +1,7 @@
 <?php
 define('APPOINTMENT_MAIL_FAIL', 'Your attempt to cancel the appointment is failed, please try again later');
 
-define('POEM_MAIL_SUCCESS', 'Well, what do you know!
-What do you say!
-Aren\'t we the lucky ones?
-We have mail on the way!');
+define('MAIL_SUCCESS', 'Congratulations, your mail has successfully been sent');
 
 define('APPOINTMENT_DELETE_SUCCESS', 'Your appointment is successfully cancelled, and we are sorry 
 you cancelled, we do hope you will come back again');

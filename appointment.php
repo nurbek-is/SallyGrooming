@@ -8,8 +8,7 @@
       header("Location: login.php?no-access=1");
     }
    $groomId=$_GET['GroomingID'];
-   var_dump($groomId);
-  $query = "SELECT GroomingID,DateSubmitted,FirstName, LastName, Address, City, State, Zip, PhoneNumber, 
+  $query = "SELECT GroomingID,DateSubmitted,FirstName, LastName,Address, City, State, Zip, PhoneNumber, 
   Email, PetType, Breed, PetName, NeuteredOrSpayed,PetBirthday
   FROM grooming
   WHERE GroomingID = ?";
@@ -49,24 +48,17 @@
 <link rel="stylesheet" href="styles/normalize.css">
 <link rel="stylesheet" href="styles/styles.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<title><?= $row['breed']?></title>
+<title class='mustard-container'><?= $row['breed']?></title>
 </head>
 <body>
-<main>
+<main class='mustard-container'>
 <?php if ($row) { ?>
   <h1><?= 'Thank you for your submission for appointment' ?></h1>
   <div><?= nl2br('Date Submitted: '. $dateSubmitted) ?></div>
   
   <?= nl2br('Pending Review') ?>
 
-  <?php
-      if (isAppntAuthor($groomId)) {
-        echo "<a href='appnt-delete.php?GroomingID=$groomId'>Delete</a>
-        <a href='appnt-edit.php?GroomingID=$groomId'>Edit</a>";
-      } else {
-        header("Location: index.php");
-      }
-    ?>
+ 
 <table>
   <tr>
     <td><?= '$groomingID is ' ?></td>
@@ -139,3 +131,7 @@
 </main>
 </body>
 </html>
+
+<?php
+  require 'includes/footer.php';
+?>

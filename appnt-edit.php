@@ -6,7 +6,7 @@
   }
   $groomId=$_REQUEST['GroomingID'];
 
-  if (!isAppntAuthor($groomId)) {
+  if (!isAppntRequester($groomId)) {
     header("Location: index.php");
   }
   $errors = [];

@@ -228,9 +228,9 @@ $(function(){
   <?php
     }
   ?>
-  <!-- </section> -->
 </main>
  
+
 <?php
   require 'includes/footer.php';
 ?>

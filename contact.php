@@ -81,9 +81,9 @@ Thank you very, very much!
       $mail->AltBody = $text;
   
       $mail->send();
-      echo '<p class="success">' . nl2br(POEM_MAIL_SUCCESS) . '</p>';
+      echo '<p class="success">' . nl2br(MAIL_SUCCESS) . '</p>';
     } catch (Exception $e) {
-      echo '<p class="error">' . nl2br(POEM_MAIL_FAIL) . '</p>';
+      echo '<p class="error">' . nl2br(MAIL_FAIL) . '</p>';
       logError($e);
     }
     echo '</article>';

@@ -2,6 +2,13 @@
   $pageTitle = 'Grooming Appointments';
   require '../includes/header.php';
 
+  if (!isAuthenticated()) {
+    header("Location: login.php?no-access=1");
+  }
+  if (!isAdmin($currentUserId)) {
+     header("Location: index.php");
+  }
+
   $offset = $_GET['offset'] ?? 0; //if offset is null, default value will be 0;
   $offset = (int) $offset; //making the offset integer so we can use it later as ===
   $rowsToShow = 5;
@@ -107,7 +114,7 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
 <title>Grooming Appointment List</title>
 </head>
 <body>
-<main>
+<main id='appnt-table-main'>
   <h1><?=$pageTitle?></h1>
   <table>
   <tbody>
@@ -175,27 +182,6 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
           ?>
         </tr>
       </tfoot>
-    <!-- <h2>Filtering</h2>
-    <form method="get" action="admin.php">
-    <input type="hidden" name="order" value="date_approved">
-     <input type="hidden" name="dir" value="desc">
-      <label for="cat">Breed:</label>
-      <select name="cat" id="cat">
-        <option value="0">All</option>
-        <option value="1">Pitbull</option>
-        <option value='2'>German Shepherd (5)</option>
-        <option value='1'>Persian Cat (2)</option>
-        <option value='4'>Boxer (1)</option>
-      </select>
-      <label for="user">LastName:</label>
-      <select name="user" id="user">
-        <option value="0">All</option>
-        <option value='3'>Kalvin (1)</option>
-        <option value='2'>Gary (2)</option>
-        <option value='1'>Mike (5)</option>
-      </select>
-      <button name="filter" class="wide">Filter</button>
-    </form> -->
   </table>
 </main>
 </body>

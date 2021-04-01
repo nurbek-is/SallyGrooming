@@ -2,6 +2,10 @@
   $pageTitle = 'List of Grooming Requests';
   require '../includes/header.php';
 
+  if (!isAdmin($currentUserId)) {
+     header("Location: index.php");
+  }
+
   $groomId=$_GET['GroomingID'];
   $query = "SELECT GroomingID,DateSubmitted,FirstName, LastName, Address, City, State, Zip, PhoneNumber, 
   Email, PetType, Breed, PetName, NeuteredOrSpayed,PetBirthday,user_id
@@ -34,19 +38,20 @@
     $title = "There is no pet appointment for this groomingID";
   }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="styles/normalize.css">
-<link rel="stylesheet" href="../styles/styles.css">
-<title><?= $row['breed']?></title>
+<link rel="stylesheet" href="styles/styles.css">
+
+<title>Admin Appointment View</title>
 </head>
 <body>
-<main>
+<main id='main-admin-apnt'>
 <?php if ($row) { ?>
-  <h1><?= 'breedname: '.$breed ?></h1>
+  <h1><?= 'Type of Pet: '.$petType ?></h1>
  
 <table>
   <tr>

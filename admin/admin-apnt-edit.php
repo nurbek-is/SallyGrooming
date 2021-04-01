@@ -1,6 +1,7 @@
 <?php
   $pageTitle = 'Edit';
   require '../includes/header.php';
+
   if (!isset($_REQUEST['GroomingID'] )) {
     header("Location: index.php");
   }
@@ -8,6 +9,12 @@
 
   if (!isAdmin($currentUserId)) {
     header("Location: ../index.php");
+  }
+
+  $cancelButton = isset($_POST['cancel']);
+ 
+  if($cancelButton) {
+    header("Location: admin.php");
   }
   $errors = [];
 
@@ -138,7 +145,7 @@
 
     if (!empty($appntUpdated)) {
       echo '<p class="success">Your Appointment is updated.</p>';
-      echo '<p>We will review your updated Appointment and confirm with you soon.</p>';
+      echo '<p class="success">We will review your updated Appointment and confirm with you soon.</p>';
     }
   }
 ?>
@@ -149,23 +156,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="../styles/normalize.css">
 <link rel="stylesheet" href="../styles/styles.css">
-<script src='grm-form.js' rel='script'></script>
-<title>Grooming Appointment Form</title>
+<!-- <script src='grm-form.js' rel='script'></script> -->
+<title>Admin Appointment Edit</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script> 
 $(function(){
-    $(".dog-div").hide();
-  $("select:first()").on('change',function(){
-    if($("#type-pet option:selected").text()=='dog') {
-      $(".dog-div").show();
-      } 
-    })
+    $('#category-tabs li a').click(function(){
+    $(this).next('ul').slideToggle('500');
+    $(this).find('i').toggleClass('fa-plus-circle fa-minus-circle');
+});
   });
 </script>
 </head>
 <body>
-<main>
-  <h1>Make a Grooming Appointment for your pet!</h1>
+<main id='admin-apnt-edit'>
+  <h1>Edit Your Existing Grooming Appointment</h1>
   <?php
    
     if (!empty($errors)) {
@@ -266,8 +271,12 @@ $(function(){
         <input type="number"  name="birth-year" id='birth-year' value="<?=$f['birth-year']?>">
       </section>
       </fieldset>
-      <button name="GroomingID" value="<?=$groomId?>" class="wide"> Edit Appointment
+      <button name="GroomingID" value="<?=$groomId?>" class="wide"> Submit Edited Appointment
       </button>
+      
+      <button name="cancel" value="" class="wide"> Cancel
+      </button>
+      
   </form>
 </main>
 </body>

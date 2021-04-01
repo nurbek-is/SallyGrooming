@@ -19,24 +19,24 @@ $(function(){
   });
 </script>
 </head>
-<main id='mainservices'>
+<main id='main-canvas'>
     <section class='services'>
         <section class='subservices'>
-            <h3><span>Grooming</span></h3>
-                <img src="images/dog-groom-380-300.png" alt="dog grooming">
-                <p>As fun and convenient as our self service wash is, we know that do-it-yourself pet grooming is not always on your list of Top 10 favorite ways to spend your free time! That's why Sandy's Grooming offers full service, professional grooming in Seattle. Even if you do enjoy bathing your pup, everyone deserves a spa day once in a while! Our professional pet grooming service is a great way to spoil a pet that has been an extra good boy.
-                Unlike other grooming "production" shops, Sandys Grooming  limit the number of clients they see each day so that they can spend quality one-on-one time with each dog. Our dog grooming professionals will lather, wash, and pamper your pet. You can expect a shiny, soft coat, clipped nails, and a sweet smell! Most pets are finished and ready to go home in about three hours, instead of spending the whole day at the shop. You can drop your pet off, do your shopping, run some errands, and come back for pick up.Schedule your professional pet grooming service today. Walk-ins welcome for all self-wash stations! </p>
-                <button class='book-btn'><a href="grooming.php">Book Now</a></button>
-                <ul id="category-tabs">
-                    <li><a href="javascript:void"><i class="fa fa-plus-circle"></i>Click to View Grooming Rates and Details</a>
-                        <ul class='rates-ul'>
-                            <li><a href="javascript:void">30 Minute Grooming. Depending on your pet’s specific needs – $15.00 per visit (3 or more visits per week required)</a></li>
-                            <li><a href="javascript:void">45 Minute Grooming, Depending on your pet’s specific needs –  $17/visit single visits</a></li>
-                            <li><a href="javascript:void">60 Minute Grooming, needs to be scheduled at least 24 hours before the day of visit. Depending on your pet’s specific needs – $25.00 per visit </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
+                <h3><span>Grooming</span></h3>
+                    <img src="images/dog-groom-380-300.png" alt="dog grooming">
+                    <p>As fun and convenient as our self service wash is, we know that do-it-yourself pet grooming is not always on your list of Top 10 favorite ways to spend your free time! That's why Sandy's Grooming offers full service, professional grooming in Seattle. Even if you do enjoy bathing your pup, everyone deserves a spa day once in a while! Our professional pet grooming service is a great way to spoil a pet that has been an extra good boy.
+                    Unlike other grooming "production" shops, Sandys Grooming  limit the number of clients they see each day so that they can spend quality one-on-one time with each dog. Our dog grooming professionals will lather, wash, and pamper your pet. You can expect a shiny, soft coat, clipped nails, and a sweet smell! Most pets are finished and ready to go home in about three hours, instead of spending the whole day at the shop. You can drop your pet off, do your shopping, run some errands, and come back for pick up.Schedule your professional pet grooming service today. Walk-ins welcome for all self-wash stations! </p>
+                    <button class='book-btn'><a href="grooming.php">Book Now</a></button>
+                    <ul id="category-tabs">
+                        <li><a href="javascript:void"><i class="fa fa-plus-circle"></i>Click to View Grooming Rates and Details</a>
+                            <ul class='rates-ul'>
+                                <li><a href="javascript:void">30 Minute Grooming. Depending on your pet’s specific needs – $15.00 per visit (3 or more visits per week required)</a></li>
+                                <li><a href="javascript:void">45 Minute Grooming, Depending on your pet’s specific needs –  $17/visit single visits</a></li>
+                                <li><a href="javascript:void">60 Minute Grooming, needs to be scheduled at least 24 hours before the day of visit. Depending on your pet’s specific needs – $25.00 per visit </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+        </section>
 
         <section class='subservices'>
                 <h3><span>Self Washing</span></h3>

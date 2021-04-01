@@ -19,9 +19,9 @@ require_once 'config.php';
   function isAuthenticated() {
     return isset($_SESSION['user-id']);
   }
-  function isAppntAuthor($groomId, $userId = null) {
+  function isAppntRequester($groomId, $userId = null) {
     /*
-      Check if user is author of poem
+      Check if user is requestr of Appointment
       $userID defaults to logged-in user id
     */
     $db = dbConnect();

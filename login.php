@@ -92,12 +92,12 @@
     }
 
     if (isset($_GET['just-registered'])) {
-      echo '<article class="poem success">' .
-          nl2br(POEM_REGISTRATION_SUCCESS) .
+      echo '<article class="success">' .
+          nl2br(REGISTRATION_SUCCESS) .
         '</article>';
       } elseif (isset($_GET['no-access'])) {
-        echo '<article class="poem success">' .
-            nl2br(POEM_ACCESS_DENIED) .
+        echo '<article class="success">' .
+            nl2br(ACCESS_DENIED) .
           '</article>';
       } else {
       echo '<p>Need an account? 
