@@ -3,7 +3,7 @@
   require '../includes/header.php';
 
   if (!isAdmin($currentUserId)) {
-     header("Location: index.php");
+     header("Location: login.php");
   }
 
   $groomId=$_GET['GroomingID'];

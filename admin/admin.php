@@ -1,12 +1,9 @@
 <?php
   $pageTitle = 'Grooming Appointments';
-  require '../includes/header.php';
+  require 'includes/header.php';
 
   if (!isAuthenticated()) {
     header("Location: login.php?no-access=1");
-  }
-  if (!isAdmin($currentUserId)) {
-     header("Location: index.php");
   }
 
   $offset = $_GET['offset'] ?? 0; //if offset is null, default value will be 0;
@@ -187,5 +184,5 @@ $PetBirthdayLink = $href . "order=PetBirthday&dir=$dirPetBirthday";
 </body>
 </html>
 <?php
-  require '../includes/footer.php';
+  require 'includes/footer.php';
 ?>

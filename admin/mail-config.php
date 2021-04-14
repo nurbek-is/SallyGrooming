@@ -20,7 +20,7 @@
     $mail->Host = "smtp.live.com"; // hotmail.com or outlook.com
     $mail->Port = 587;
     $mail->Username = 'seattle-homes@hotmail.com'; // SMTP account username
-    $mail->Password = ''; // SMTP account password
+    $mail->Password = 'Webucator.0112'; // SMTP account password
     $mail->setFrom('seattle-homes@hotmail.com', 'Nick Ishmael');
     
     // Uncomment the next line and change the email address

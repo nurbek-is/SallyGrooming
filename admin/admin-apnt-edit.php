@@ -1,6 +1,6 @@
 <?php
-  $pageTitle = 'Edit';
-  require '../includes/header.php';
+  $pageTitle = 'Edit your Appointment';
+  require 'includes/header.php';
 
   if (!isset($_REQUEST['GroomingID'] )) {
     header("Location: index.php");
@@ -149,27 +149,8 @@
     }
   }
 ?>
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="../styles/normalize.css">
-<link rel="stylesheet" href="../styles/styles.css">
-<!-- <script src='grm-form.js' rel='script'></script> -->
-<title>Admin Appointment Edit</title>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script> 
-$(function(){
-    $('#category-tabs li a').click(function(){
-    $(this).next('ul').slideToggle('500');
-    $(this).find('i').toggleClass('fa-plus-circle fa-minus-circle');
-});
-  });
-</script>
-</head>
-<body>
-<main id='admin-apnt-edit'>
+
+<main id='admin-apnt-edit' class='small'>
   <h1>Edit Your Existing Grooming Appointment</h1>
   <?php
    
@@ -183,7 +164,7 @@ $(function(){
       echo '</ol>';
     } 
   ?>
-<form method="post" action="admin-apnt-edit.php"  id='ap-form' novalidate>
+<form method="post" action="admin-apnt-edit.php"  class='ap-form' novalidate>
    
     <fieldset>
       <legend>Owner Info</legend>
@@ -273,10 +254,13 @@ $(function(){
       </fieldset>
       <button name="GroomingID" value="<?=$groomId?>" class="wide"> Submit Edited Appointment
       </button>
-      
+
       <button name="cancel" value="" class="wide"> Cancel
       </button>
       
   </form>
 </main>
-</body>
+
+<?php
+  require 'includes/footer.php';
+?>

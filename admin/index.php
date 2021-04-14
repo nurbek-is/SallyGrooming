@@ -8,7 +8,7 @@ $pageTitle= 'Home Page';
     <section class='services'>
         <section class='clear-subsection'>
                 <h3><span>Grooming</span></h3>
-                    <img src="images/dog-groom-380-300.png" alt="dog grooming">
+                    <img src="../images/dog-groom-380-300.png" alt="dog grooming">
                         <div class='index-text'><p class='white-text-color'>As fun and convenient as our self service wash is, we know that do-it-yourself pet grooming is not always on your list of Top 10 favorite ways to spend your free time! That's why Sandy's Grooming offers full service, professional grooming in Seattle. Even if you do enjoy bathing your pup, everyone deserves a spa day once in a while! Our professional pet grooming service is a great way to spoil a pet that has been an extra good boy.
                             Unlike other grooming "production" shops, Sandys Grooming  limit the number of clients they see each day so that they can spend quality one-on-one time with each dog. Our dog grooming professionals will lather, wash, and pamper your pet. You can expect a shiny, soft coat, clipped nails, and a sweet smell! Most pets are finished and ready to go home in about three hours, instead of spending the whole day at the shop. You can drop your pet off, do your shopping, run some errands, and come back for pick up.Schedule your professional pet grooming service today. Walk-ins welcome for all self-wash stations! </p>
                             <button class='book-btn'><a href="grooming.php">Schedule Now</a></button>
@@ -26,7 +26,8 @@ $pageTitle= 'Home Page';
 
         <section class='clear-subsection'>
                 <h3><span>Self Washing</span></h3>
-                <img src='images/self-wash-380x380.png' alt = "dog-washing">
+                <img src='../images/self-wash-380x380.png' alt = "dog-washing">
+                
                 <div class='index-text'><h4>Basic Wash</h4>
                     <p class='white-text-color'>Basic Wash Includes an apron, brushes & combs, house shampoo, cream rinse, towels and dryer.
                     This is content other Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, voluptatem? Corporis, tempora distinctio beatae cumque placeat officiis alias officia dolorum ducimus adipisci sunt quam architecto tenetur. Similique quo quos dignissimos!locale_get_region</p>
@@ -67,7 +68,7 @@ $pageTitle= 'Home Page';
                     </li>
                 </ul> 
                 </div>
-                <img src="images/chow.png" alt="dogs in tub being washed">
+                <img src="../images/chow.png" alt="dogs in tub being washed">
                 <div class='index-text'>
                     <h4>Fur Buster</h4>
                     <p class='white-text-color'>Our specially formulated anti-shed shampoo and rejuvenating conditioner that will tighten pores and moisturize dry skin to help reduce shedding..  </p>
@@ -86,7 +87,7 @@ $pageTitle= 'Home Page';
 
         <section class='clear-subsection'>
                 <h3><span>Nail Trimming</span></h3>
-                <img src="images/cat-paw-380x380.png" alt="nail trimming">
+                <img src="../images/cat-paw-380x380.png" alt="nail trimming">
                 <div class='index-text'>
                     <p class='white-text-color'>Nail Trim - Regular and Nail Trim with Dremel Machine. Grinding smooths out rough edges on your dog's nails to reduce scratches while keeping nails shorter for longer. Prevents painful splaying & splitting of your dog's nails. No appointment needed!</p>
                     <button class='book-btn'><a href="grooming.php">Schedule Now</a></button>

@@ -1,6 +1,6 @@
 <?php
   $pageTitle = 'Delete Appointment Request';
-  require '../includes/header.php';
+  require 'includes/header.php';
 
   $groomId = $_REQUEST['GroomingID'];
 
@@ -19,7 +19,7 @@
     $qDelete = 'DELETE FROM grooming WHERE GroomingID = ?';
     try {
       $stmt = $db->prepare($qDelete);
-      if (!$stmt->execute( [$groomId] )) {
+      if (!$stmt->execute([$groomId])) {
         $errorMsg = $stmt->errorInfo()[2];
         logError($errorMsg , true); 
       }
@@ -95,7 +95,7 @@
   ?>
 </main>
 <?php
-  require '../includes/footer.php';
+  require 'includes/footer.php';
 ?>
 </body>
 </html>
